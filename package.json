@@ -1,0 +1,26 @@
+{
+  "name": "deep-deep-dungeon",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --open --config webpack.development.js",
+    "build": "webpack --config webpack.distribution.js"
+  },
+  "keywords": [],
+  "author": "Sebastian Wilks",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "^3.60.0",
+    "phaser3-rex-plugins": "^1.60.2"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.82.1",
+    "webpack-cli": "^5.1.1",
+    "webpack-dev-server": "^4.15.0"
+  }
+}
