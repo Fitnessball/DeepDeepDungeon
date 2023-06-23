@@ -6,7 +6,7 @@ export class PreLoadScene extends Phaser.Scene {
 
         //EBENE1
         this.load.image('tileEbene1', '../assets/images/Tilesets/TileSetEbene1ex.png');
-        this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-03.json');
+        this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-022.json');
         //CHARACTER
         //idles
         this.load.spritesheet('player_idle_down', '../assets/sprites/player/idle/1_Character_idle_down-Sheet.png', {
@@ -34,6 +34,11 @@ export class PreLoadScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
+        //death
+        this.load.spritesheet('player_faint', '../assets/sprites/player/death/V1Character_death-Sheet.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
         //ENEMY1 SLIME
         //idle
         this.load.spritesheet('enemy1_idle', '../assets/sprites/enemy1/Slime_idle-Sheet.png', {
@@ -48,8 +53,12 @@ export class PreLoadScene extends Phaser.Scene {
         //HERZEN
         this.load.image('herzLeer', '../assets/sprites/icons/HerzLeer.png');
         this.load.image('herzVoll', '../assets/sprites/icons/HerzVoll.png');
-
-
+        this.load.spritesheet('hearth_faint','../assets/sprites/icons/HerzVerschwindet-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        //SPELLS
+        this.load.image('spell1','../assets/sprites/Spells/Spell2.png');
     }
     create() {
         this.scene.start('ebene1scene');

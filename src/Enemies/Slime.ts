@@ -22,6 +22,8 @@ export class Slime extends Phaser.Physics.Arcade.Sprite{
         this.anims.play('enemy1-walk'); 
         this.setPipeline('Light2D');
         this.setDepth(3);
+        this.setActive(true)
+        this.setVisible(true)
         scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE,this.slimeTileCollisionHandler,this)
         this.changeWalkEvent = scene.time.addEvent({
             delay: 2000,

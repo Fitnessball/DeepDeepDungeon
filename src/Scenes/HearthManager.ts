@@ -1,16 +1,16 @@
 import 'phaser';
 import { sceneEvents } from '../Events/MainEvents';
+import { createIconsAnimation } from '../Animations/IconsAnimations';
 
 export class HearthManager extends Phaser.Scene{
     private hearths: Phaser.GameObjects.Group;
-
     constructor(){
         super({key:'HearthManager'})
     }
     create(){
          this.hearths = this.add.group({
             //zu Animation ändern falls herzen auf sprites gelegt werden
-            classType: Phaser.GameObjects.Image
+            classType: Phaser.GameObjects.Sprite
         });
         this.hearths.createMultiple({
             key:'herzVoll',
@@ -29,18 +29,19 @@ export class HearthManager extends Phaser.Scene{
     private playerHealthDamageHandler(health:number){
         this.hearths.children.each((gameObj, index)=>{
 
-            const hearth = gameObj as Phaser.GameObjects.Image
+            const hearth = gameObj as Phaser.GameObjects.Sprite
 
             if(index < health){
 
-                hearth.setTexture('herzVoll').setScale(0.85);
-                console.log('Töfte')
-            }else{
-                hearth.setTexture('herzLeer').setScale(0.85).setVisible(false);
-                console.log('Töfte')
+                hearth.setTexture('herzVoll').setScale(0.8);
+            
+            }else if(index > health){
+                hearth.setTexture('herzLeer').setScale(0.8).setVisible(false);
 
+            }else{
+                hearth.play('hearth-faint').setScale(0.8);
             }
-            console.log('nicht so töfte')
+            
 
             return null
         })

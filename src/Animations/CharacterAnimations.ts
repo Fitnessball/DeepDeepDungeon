@@ -37,7 +37,12 @@ const createCharacterAnimation = (anims: Phaser.Animations.AnimationManager)=>{
                 frameRate: 10,
                 repeat: -1
             });
-
+            anims.create({
+                key: 'player-faint',
+                frames: anims.generateFrameNumbers('player_faint', { start: 0, end: 6 }),
+                frameRate: 10,
+                repeat: 0
+            });
 }
 
 export{
