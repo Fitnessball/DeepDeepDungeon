@@ -34,6 +34,19 @@ export class PreLoadScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
+        //attack
+        this.load.spritesheet('player_attack_right','../assets/sprites/player/attack/Character_attack_right-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        this.load.spritesheet('player_attack_down','../assets/sprites/player/attack/Character_attack_down-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        this.load.spritesheet('player_attack_up','../assets/sprites/player/attack/Character_attack_up-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        });
         //death
         this.load.spritesheet('player_faint', '../assets/sprites/player/death/V1Character_death-Sheet.png', {
             frameWidth: 16,
@@ -50,6 +63,11 @@ export class PreLoadScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
+        //death
+        this.load.spritesheet('enemy1_death','../assets/sprites/enemy1/Slime_death-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        })
         //HERZEN
         this.load.image('herzLeer', '../assets/sprites/icons/HerzLeer.png');
         this.load.image('herzVoll', '../assets/sprites/icons/HerzVoll.png');

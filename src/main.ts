@@ -1,7 +1,7 @@
 import 'phaser';
 import { PreLoadScene } from './Scenes/PreLoadScene';
 import { Ebene1Scene } from './Scenes/Ebene1Scene';
-import { HearthManager } from './Scenes/HearthManager';
+import { HearthManager } from './Managers/HearthManager';
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     width: 320,
@@ -25,7 +25,7 @@ const config: Phaser.Types.Core.GameConfig = {
             default: 'arcade',
             arcade: {
                 gravity: { y: 0},
-                debug: false,
+                debug: true,
                 fixedStep: false
                 
             }

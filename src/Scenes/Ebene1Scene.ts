@@ -6,18 +6,24 @@ import { Slime } from '../Enemies/Slime';
 import '../MainCharacter/Player'
 import Player from '../MainCharacter/Player';
 import { sceneEvents } from '../Events/MainEvents';
+import LightManager from '../Managers/LightManager';
 export class Ebene1Scene extends Phaser.Scene {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    animpart: null;
     player: Player;
     slime: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-    animpart: null;
-    light: Phaser.GameObjects.Light;
-    lightSpell1: Phaser.GameObjects.Light;
+    //COLLIDER
     playerSlimeCollider?: Phaser.Physics.Arcade.Collider;
+    //PHYSICS GROUPS
     spell1!: Phaser.Physics.Arcade.Group;
     slimes!: Phaser.Physics.Arcade.Group;
+    //LICHTER
+    lightManager: LightManager;
+    playerlight: Phaser.GameObjects.Light;
+    spell1light: Phaser.GameObjects.Light;
+    spell1Collide: boolean;
     constructor() {
-        super('ebene1scene')
+        super('ebene1scene');
     }
 
     preload() {
@@ -46,23 +52,25 @@ export class Ebene1Scene extends Phaser.Scene {
         createCharacterAnimation(this.anims);
         this.player = this.add.player(83, 83, 'player_idle_down');
         this.player.setSpell1(this.spell1)
-
-
-        //LIGHTS
-        this.lights.enable().setAmbientColor(0x000000);//setAmbientColor makes ground darker
+        //Z ACHSE FUER BELEUCHTUNG
+        this.lights.enable().setAmbientColor(0x000000);
+        this.lightManager = new LightManager(this);
+        this.playerlight = this.lightManager.addLight(this.player.x, this.player.y, 0xffffff,70,0.8);
+        this.spell1light = this.lightManager.addLight(this.player.x, this.player.y, 0xFFA500,30,0.8);
+        this.lightManager.toggleAllLights(true);
+        this.lightManager.setLightVisible(this.spell1light,false);
+        
         const darkOverlay = this.add.rectangle(0, 0, 2000, 2000, 0x000000, 0.8);//make walls darker
 
         Ebene1Ground.setPipeline('Light2D');
         Ebene1SideWalls.setPipeline('Light2D');
-
         Ebene1Walls.setDepth(0);
         darkOverlay.setDepth(1);
         Ebene1SideWalls.setDepth(2);
         Ebene1Ground.setDepth(3);
         this.player.setDepth(4);
-        this.light = this.lights.addLight(140, 100, 80, 0xffffff, 0.8);
-        this.lightSpell1 = this.lights.addLight(140, 100, 60, 0x440000, 0.9).setVisible(false);
         //ENEMY1 SLIME
+        
         createSlimeAnimation(this.anims);
         this.slimes = this.physics.add.group({
             classType: Slime,
@@ -72,24 +80,26 @@ export class Ebene1Scene extends Phaser.Scene {
                     gameObjSlime.body.onCollide = true
                 }
             }
-        })
-        //this.slimes.get(140, 90, 'slime')
-        //this.slimes.get(100, 90, 'slime1')
-
+        });
         const slimesLayer = Ebene1.getObjectLayer('Slimes')
         slimesLayer?.objects.forEach(slimeObj => {
-            this.slimes.get(slimeObj.x! + slimeObj.width!*0.5,slimeObj.y!-slimeObj.height!*0.5,'slime')
-        })
-
+            const slime = this.slimes.get(slimeObj.x! + slimeObj.width!*0.5,slimeObj.y!-slimeObj.height!*0.5,'slime')
+            this.physics.world.enable(this.slimes);
+            const slimeBody = slime.body as Phaser.Physics.Arcade.Body;
+            slimeBody.setSize(14,8)
+            const xOffset = 0;
+            const yOffset = 8;
+            slimeBody.setOffset(xOffset, yOffset);
+        });
         //CAMERA
         this.cameras.main.startFollow(this.player, false, 1, 1);
         //DEBUG COLLIDERS
-        //const debugGraphics = this.add.graphics().setAlpha(0.8)
-        //Ebene1Walls.renderDebug(debugGraphics, {
-        //    tileColor: null,
-        //    collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255),
-        //    faceColor: new Phaser.Display.Color(40, 39, 37, 255)
-        //})
+        // const debugGraphics = this.add.graphics().setAlpha(0.8)
+        // Ebene1Walls.renderDebug(debugGraphics, {
+        //     tileColor: null,
+        //     collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255),
+        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255)
+        // })
         this.toggleSceneVisibility('HearthManager', 1)
         //COLLIDERS
         this.physics.add.collider(this.player, Ebene1Walls);
@@ -101,76 +111,74 @@ export class Ebene1Scene extends Phaser.Scene {
         
     }
     //COLLSIONHANDLER
+    //SLIME -> PLAYER
     private slimePlayerCollisionHandler(obj1: any, obj2: any) {
         const slime = obj2 as Slime
-        const dx = this.player.x - slime.x
-        const dy = this.player.y - slime.y
-        const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200)
-        this.player.handleEnemyHit(dir)
+        const dx = this.player.x - slime.x;
+        const dy = this.player.y - slime.y;
+        const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+        this.player.handleEnemyHit(dir);
         sceneEvents.emit('player-On-Health-Damage', this.player.playerhealth);
         this.toggleSceneVisibility('HearthManager', 4000)
-
         if (this.player.playerhealth <= 0) {
-            //this.light.setColor(0x880000)
-            this.playerSlimeCollider?.destroy()
-            const lightRadiusTween = this.tweens.add({
-                targets: this.light,
-                radius: 0,
-                duration: 4000,
-                onComplete: () => {
-                }
-            });
+            this.playerSlimeCollider?.destroy();
         }
     }
+    //SPELL1 -> SLIME
     private spell1SlimeCollisionHandler(spell1: any, slime: any) {
-        //Kann einen error erzeugen fehler muss noch behoben werden
         this.spell1.killAndHide(spell1);
-        this.slimes.killAndHide(slime);
-        slime.destroy()
+        this.spell1Collide = true
         spell1.destroy()
-        this.lightRadiusTweenSpell1()
-    }
-    private lightRadiusTweenSpell1(){
-        //BUG FIXXEN
-        const lightRadiusTween = this.tweens.add({
-            targets: this.lightSpell1,
-            radius: 0,
-            duration: 300,
-            onActive: () => {
-                this.lightSpell1 = this.lights.addLight(140, 100, 60, 0x440000, 0.9).setVisible(false)
-            }
-        });
+        slime.handleSlimeHit();
+        //sceneEvents.emit('player-On-Health-Damage', this.player.playerhealth);
 
+        if (slime.slimehealth <= 0) {
+            setTimeout(() => {
+            slime.destroy()
+            this.slimes.killAndHide(slime);
+              }, 950);
+            
+        }
     }
+    //SPELL1 WALLS
     private spell1WallsCollisionHandler(spell1: any, obj2: any) {
         this.spell1.killAndHide(spell1);
+        this.spell1Collide = true
         spell1.destroy()
-
-        this.lightRadiusTweenSpell1()
-
     }
+    //SCENE HEARTHS VISIBILITY
     private toggleSceneVisibility(sceneName: string, duration: number) {
         const scene = this.scene.get(sceneName);
-        // Show the scene
         scene.sys.setVisible(true);
-        // Set a timer to hide the scene after the specified duration
         this.time.delayedCall(duration, () => {
             scene.sys.setVisible(false);
         });
     }
 
     update() {
-        this.light.setPosition(this.player.x, this.player.y)
-        this.spell1.getChildren().forEach((spell: any) => {
-           this.lightSpell1.setVisible(true);
-            const x = spell.x;
-            const y = spell.y;
-            this.lightSpell1.setPosition(x,y)
-          });
-        //this.lightSpell1.setPosition(this.spell1)
-        //uebergibt den Input an die playerklasse
+        //UPDATE LIGHT MANAGER
+        this.lightManager.update();
+        //LIGHT FOLLOW PLAYER
+        this.lightManager.updateLightPosition(this.playerlight,this.player.x,this.player.y)
         if (this.player) {
             this.player.update(this.cursors)
         }
+        //TURN OFF LIGHT ON PLAYER DEATH
+        if (this.player.playerhealth <= 0) {
+            this.lightManager.reduceLightRadius(this.playerlight,0,1000,0.3)
+        }
+        //TURN OFF LIGHT ON COLLIDE SPELL1
+        if(this.spell1Collide === true){
+            this.lightManager.setLightVisible(this.spell1light,true);
+            this.lightManager.reduceLightRadius(this.spell1light,0,1000,0.3);
+        }
+        //LIGHT FOLLOW SPELL1
+        this.spell1.getChildren().forEach((spell: any) => {
+           this.lightManager.setLightRadius(this.spell1light,30)
+           this.lightManager.setLightVisible(this.spell1light,true);
+            const x = spell.x;
+            const y = spell.y;
+            this.lightManager.updateLightPosition(this.spell1light,x,y);
+          });
     }
 }

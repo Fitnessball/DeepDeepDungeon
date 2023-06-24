@@ -13,4 +13,10 @@ export const createSlimeAnimation = (anims: Phaser.Animations.AnimationManager)=
             frameRate: 5,
             repeat: -1
         });
+        anims.create({
+            key:'enemy1-death',
+            frames: anims.generateFrameNumbers('enemy1_death',{start: 0, end: 3}),
+            frameRate: 5,
+            repeat: 0
+        })
 }

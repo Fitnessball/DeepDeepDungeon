@@ -43,6 +43,24 @@ const createCharacterAnimation = (anims: Phaser.Animations.AnimationManager)=>{
                 frameRate: 10,
                 repeat: 0
             });
+            anims.create({
+                key: 'player-attack-right',
+                frames: anims.generateFrameNumbers('player_attack_right',{start:0,end:3}),
+                frameRate: 25,
+                repeat: 0
+            });
+            anims.create({
+                key: 'player-attack-down',
+                frames: anims.generateFrameNumbers('player_attack_down',{start:0,end:3}),
+                frameRate: 25,
+                repeat: 0
+            });
+            anims.create({
+                key: 'player-attack-up',
+                frames: anims.generateFrameNumbers('player_attack_up',{start:0,end:3}),
+                frameRate: 25,
+                repeat: 0
+            });
 }
 
 export{
