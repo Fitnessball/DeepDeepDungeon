@@ -6,7 +6,7 @@ export class PreLoadScene extends Phaser.Scene {
 
         //EBENE1
         this.load.image('tileEbene1', '../assets/images/Tilesets/TileSetEbene1ex.png');
-        this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-022.json');
+        this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-023.json');
         //CHARACTER
         //idles
         this.load.spritesheet('player_idle_down', '../assets/sprites/player/idle/1_Character_idle_down-Sheet.png', {
@@ -77,6 +77,11 @@ export class PreLoadScene extends Phaser.Scene {
         });
         //SPELLS
         this.load.image('spell1','../assets/sprites/Spells/Spell2.png');
+        //CHESTS
+        this.load.spritesheet('normal_Chest','../assets/sprites/Objects/chests/normal_Chest-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        });
     }
     create() {
         this.scene.start('ebene1scene');

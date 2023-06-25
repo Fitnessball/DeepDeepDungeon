@@ -2,11 +2,16 @@ import 'phaser';
 import { createSlimeAnimation } from '../Animations/EnemieAnimations';
 import { createCharacterAnimation } from '../Animations/CharacterAnimations';
 import { createIconsAnimation } from '../Animations/IconsAnimations';
+import { ObjectsAnimation } from '../Animations/ObjectsAnimation';
+
 import { Slime } from '../Enemies/Slime';
 import '../MainCharacter/Player'
 import Player from '../MainCharacter/Player';
 import { sceneEvents } from '../Events/MainEvents';
 import LightManager from '../Managers/LightManager';
+import { normalChest } from '../Objects/normalChest';
+import { HearthManager } from '../Managers/HearthManager';
+import { GemManager } from '../Managers/GemManager';
 export class Ebene1Scene extends Phaser.Scene {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     animpart: null;
@@ -31,10 +36,14 @@ export class Ebene1Scene extends Phaser.Scene {
     }
 
     create() {
+        //CHESTS
+        ObjectsAnimation(this.anims);
         //ICONS
         createIconsAnimation(this.anims);
         //SCENE OVERLAY RUN
+        this.scene.run('GemManager');
         this.scene.run('HearthManager');
+        
         //EBENE 1 TILESET
         const Ebene1 = this.make.tilemap({ key: 'Ebene1' });
         const TilesetEbene1 = Ebene1.addTilesetImage('Ebene1', 'tileEbene1', 16, 16, 1, 2);
@@ -43,6 +52,16 @@ export class Ebene1Scene extends Phaser.Scene {
         // Ebene1SideWalls.setCollisionByProperty({ collides: true })
         const Ebene1Walls = Ebene1.createLayer('Walls', (TilesetEbene1 as Phaser.Tilemaps.Tileset), 0, 0) as Phaser.Tilemaps.TilemapLayer;
         Ebene1Walls.setCollisionByProperty({ collides: true });
+        //NORMAL CHEST
+        const normalChestGroup = this.physics.add.staticGroup({
+            classType: normalChest
+        });
+
+        const normalChestLayer = Ebene1.getObjectLayer('NormalChests');
+        normalChestLayer?.objects.forEach(normalChestObj => {
+        normalChestGroup.get(normalChestObj.x!+normalChestObj.width!*0.5,normalChestObj.y!-normalChestObj.height!*0.5,'normal_Chest');
+        normalChestGroup.setDepth(3);
+        });
         //SPELLS
         this.spell1 = this.physics.add.group({
             classType: Phaser.Physics.Arcade.Image,
@@ -51,7 +70,8 @@ export class Ebene1Scene extends Phaser.Scene {
         //PLAYER
         createCharacterAnimation(this.anims);
         this.player = this.add.player(83, 83, 'player_idle_down');
-        this.player.setSpell1(this.spell1)
+        this.player.setSpell1(this.spell1);
+        
         //Z ACHSE FUER BELEUCHTUNG
         this.lights.enable().setAmbientColor(0x000000);
         this.lightManager = new LightManager(this);
@@ -69,8 +89,9 @@ export class Ebene1Scene extends Phaser.Scene {
         Ebene1SideWalls.setDepth(2);
         Ebene1Ground.setDepth(3);
         this.player.setDepth(4);
-        //ENEMY1 SLIME
         
+      
+        //ENEMY1 SLIME        
         createSlimeAnimation(this.anims);
         this.slimes = this.physics.add.group({
             classType: Slime,
@@ -100,26 +121,43 @@ export class Ebene1Scene extends Phaser.Scene {
         //     collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255),
         //     faceColor: new Phaser.Display.Color(40, 39, 37, 255)
         // })
-        this.toggleSceneVisibility('HearthManager', 1)
+        this.toggleSceneVisibility('HearthManager', 0)
+        this.toggleSceneVisibility('GemManager', 0)
+        
+
         //COLLIDERS
         this.physics.add.collider(this.player, Ebene1Walls);
         this.physics.add.collider(this.slimes, Ebene1Walls);
         this.physics.add.collider(this.slimes, this.slimes);
+        this.physics.add.collider(this.player,normalChestGroup, this.playerNormalChestCollisionHandler,undefined,this)
         this.playerSlimeCollider = this.physics.add.collider(this.slimes, this.player, this.slimePlayerCollisionHandler, undefined, this)
         this.physics.add.collider(this.spell1, Ebene1Walls, this.spell1WallsCollisionHandler, undefined, this);
         this.physics.add.collider(this.spell1, this.slimes, this.spell1SlimeCollisionHandler, undefined, this);
-        
     }
     //COLLSIONHANDLER
+    //PLAYER -> NORMALCHEST
+    private playerNormalChestCollisionHandler(obj1:any,obj2:any){
+        const chest = obj2 as normalChest;
+        this.player.setNormalChest(chest);
+        this.toggleSceneVisibility('GemManager', 1500);
+        const scene = this.scene.get('HearthManager');
+        scene.sys.setVisible(false);
+
+        
+
+    }
     //SLIME -> PLAYER
-    private slimePlayerCollisionHandler(obj1: any, obj2: any) {
-        const slime = obj2 as Slime
+    private slimePlayerCollisionHandler(obj1: any, slimeobj: any) {
+        const slime = slimeobj as Slime
         const dx = this.player.x - slime.x;
         const dy = this.player.y - slime.y;
         const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
         this.player.handleEnemyHit(dir);
         sceneEvents.emit('player-On-Health-Damage', this.player.playerhealth);
-        this.toggleSceneVisibility('HearthManager', 4000)
+        this.toggleSceneVisibility('HearthManager', 4000);
+        const scene = this.scene.get('GemManager');
+        scene.sys.setVisible(false);
+
         if (this.player.playerhealth <= 0) {
             this.playerSlimeCollider?.destroy();
         }
@@ -130,7 +168,7 @@ export class Ebene1Scene extends Phaser.Scene {
         this.spell1Collide = true
         spell1.destroy()
         slime.handleSlimeHit();
-        //sceneEvents.emit('player-On-Health-Damage', this.player.playerhealth);
+        
 
         if (slime.slimehealth <= 0) {
             setTimeout(() => {
@@ -143,8 +181,8 @@ export class Ebene1Scene extends Phaser.Scene {
     //SPELL1 WALLS
     private spell1WallsCollisionHandler(spell1: any, obj2: any) {
         this.spell1.killAndHide(spell1);
-        this.spell1Collide = true
-        spell1.destroy()
+        this.spell1Collide = true;
+        spell1.destroy();
     }
     //SCENE HEARTHS VISIBILITY
     private toggleSceneVisibility(sceneName: string, duration: number) {
@@ -161,7 +199,7 @@ export class Ebene1Scene extends Phaser.Scene {
         //LIGHT FOLLOW PLAYER
         this.lightManager.updateLightPosition(this.playerlight,this.player.x,this.player.y)
         if (this.player) {
-            this.player.update(this.cursors)
+            this.player.update(this.cursors);
         }
         //TURN OFF LIGHT ON PLAYER DEATH
         if (this.player.playerhealth <= 0) {
@@ -174,7 +212,7 @@ export class Ebene1Scene extends Phaser.Scene {
         }
         //LIGHT FOLLOW SPELL1
         this.spell1.getChildren().forEach((spell: any) => {
-           this.lightManager.setLightRadius(this.spell1light,30)
+           this.lightManager.setLightRadius(this.spell1light,30);
            this.lightManager.setLightVisible(this.spell1light,true);
             const x = spell.x;
             const y = spell.y;

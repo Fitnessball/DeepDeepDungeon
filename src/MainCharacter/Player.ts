@@ -1,4 +1,6 @@
 import 'phaser';
+import { normalChest } from '../Objects/normalChest';
+import { sceneEvents } from '../Events/MainEvents';
 declare global{
     namespace Phaser.GameObjects{
         interface GameObjectFactory{
@@ -21,9 +23,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     private currentHealth = CurrentHealth.IDLE
     private healthTimedt = 0;
     private _playerhealth = 3;
+    private _gems = 0;
     private spell1?: Phaser.Physics.Arcade.Group;
     private direction = false;
     private playerState = PlayerState.IDLE;
+    private activeNormalChest?: normalChest;
+
+
     get playerhealth(){return this._playerhealth}
     constructor(scene: Phaser.Scene, x:number,y:number,texture:string,frame?:string|number){
         super(scene,x,y,texture,frame)
@@ -33,10 +39,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         
 
     }
-    //SETLIGHT
     //SETSPELLS
     setSpell1(spell1:Phaser.Physics.Arcade.Group){
         this.spell1 = spell1
+    }
+    //SETCHESTS
+    setNormalChest(chest: normalChest){
+        this.activeNormalChest = chest;
     }
     //added schaden auf collision
     handleEnemyHit(dirvec:Phaser.Math.Vector2){
@@ -150,32 +159,40 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         if(!cursors){return}
         if(Phaser.Input.Keyboard.JustDown(cursors.space)){
             if(this.playerState === PlayerState.CAST_SPELL){return}
-            this.castSpell1()
+            if(this.activeNormalChest){
+                const gems = this.activeNormalChest.normalChestOpen()
+                this._gems += gems
+                sceneEvents.emit('player-gems-changed',this._gems)
+                console.log(this._gems)
+            }else{
+                this.castSpell1()
+            }
             return
         }
         if(this.playerState === PlayerState.IDLE){
+            
          const vel = 45;
          if(cursors.left.isDown){
              this.setVelocity(-vel,0);
              this.anims.play('player-walk-right',true);
              this.setFlipX(true);
              this.direction = true
+             this.activeNormalChest = undefined;
          }else if(cursors.right?.isDown){
              this.setVelocity(vel,0);
              this.anims.play('player-walk-right',true);
              this.setFlipX(false);
              this.direction = false
-
+             this.activeNormalChest = undefined;
          }else if(cursors.down?.isDown){
              this.setVelocity(0,vel);
              this.anims.play('player-walk-down',true);
              this.direction = false
-
+             this.activeNormalChest = undefined;
          }else if(cursors.up?.isDown){
              this.setVelocity(0,-vel);
              this.anims.play('player-walk-up',true);
              this.direction = false
-
          }else{
               const animpart = this.anims.currentAnim?.key.split('-');
               if(animpart){
@@ -183,6 +200,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
                   this.anims.play(animpart.join('-'),true);
               } 
               this.setVelocity(0,0);
+
           }}
     }
 }

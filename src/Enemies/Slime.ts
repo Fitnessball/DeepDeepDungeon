@@ -22,7 +22,7 @@ const randomDirection = (sameDirection: Directions) => {
 export class Slime extends Phaser.Physics.Arcade.Sprite{
     private direction = Directions.RIGHT;  
     private changeWalkEvent: Phaser.Time.TimerEvent
-    private _slimehealth = 1;
+    private _slimehealth = 2;
     private currentHealth = CurrentHealth.IDLE
     private healthTimedt = 0;
     get slimehealth(){return this._slimehealth}
@@ -91,7 +91,8 @@ export class Slime extends Phaser.Physics.Arcade.Sprite{
                 break
         }
         const vel = 30;
-        if(this.currentHealth===CurrentHealth.IDLE||this.currentHealth===CurrentHealth.DAMAGE){
+        //||this.currentHealth===CurrentHealth.DAMAGE um knockback der slimes zu deaktivieren
+        if(this.currentHealth===CurrentHealth.IDLE){
         switch (this.direction){
             case Directions.RIGHT:
                 this.setVelocity(vel,0);
@@ -104,7 +105,6 @@ export class Slime extends Phaser.Physics.Arcade.Sprite{
             case Directions.UP:
                 this.setVelocity(0,-vel);
                 this.anims.play('enemy1-walk',true); 
-
                 break
             case Directions.DOWN:
                 this.anims.play('enemy1-walk',true); 

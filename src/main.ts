@@ -2,13 +2,14 @@ import 'phaser';
 import { PreLoadScene } from './Scenes/PreLoadScene';
 import { Ebene1Scene } from './Scenes/Ebene1Scene';
 import { HearthManager } from './Managers/HearthManager';
+import { GemManager } from './Managers/GemManager';
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     width: 320,
     height: 320,
     backgroundColor: "#212121",
     scene:[
-        PreLoadScene, Ebene1Scene, HearthManager
+        PreLoadScene, Ebene1Scene, HearthManager, GemManager
     ],
     scale: {
         // Größe des Screenformates
@@ -25,7 +26,7 @@ const config: Phaser.Types.Core.GameConfig = {
             default: 'arcade',
             arcade: {
                 gravity: { y: 0},
-                debug: true,
+                debug: false,
                 fixedStep: false
                 
             }
