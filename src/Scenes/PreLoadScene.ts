@@ -6,7 +6,7 @@ export class PreLoadScene extends Phaser.Scene {
 
         //EBENE1
         this.load.image('tileEbene1', '../assets/images/Tilesets/TileSetEbene1ex.png');
-        this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-023.json');
+        this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-022.json');
         //CHARACTER
         //idles
         this.load.spritesheet('player_idle_down', '../assets/sprites/player/idle/1_Character_idle_down-Sheet.png', {
@@ -85,9 +85,13 @@ export class PreLoadScene extends Phaser.Scene {
             frameHeight: 16
         });
         //LIGHTPILLARS
-        this.load.spritesheet('normal_lightPillar','../assets/sprites/Objects/lightPillar/normal_LightPillar-Sheet.png',{
+        this.load.spritesheet('small_lightPillar','../assets/sprites/Objects/lightPillar/Small_LightPillar-Sheet.png',{
             frameWidth: 16,
-            frameHeight: 32
+            frameHeight: 23
+        });
+        this.load.spritesheet('small_lightPillar_Stays','../assets/sprites/Objects/lightPillar/normal_LightPillar_Stays-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 23
         });
     }
     create() {

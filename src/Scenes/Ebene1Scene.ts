@@ -12,6 +12,7 @@ import LightManager from '../Managers/LightManager';
 import { normalChest } from '../Objects/normalChest';
 import { HearthManager } from '../Managers/HearthManager';
 import { GemManager } from '../Managers/GemManager';
+import { smallLightPillar } from '../Objects/smallLightPillar';
 export class Ebene1Scene extends Phaser.Scene {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     animpart: null;
@@ -27,6 +28,8 @@ export class Ebene1Scene extends Phaser.Scene {
     playerlight: Phaser.GameObjects.Light;
     spell1light: Phaser.GameObjects.Light;
     spell1Collide: boolean;
+    lightPillarPositionx:number;
+    lightPillarPositiony:number;
     constructor() {
         super('ebene1scene');
     }
@@ -62,6 +65,21 @@ export class Ebene1Scene extends Phaser.Scene {
         normalChestGroup.get(normalChestObj.x!+normalChestObj.width!*0.5,normalChestObj.y!-normalChestObj.height!*0.5,'normal_Chest');
         normalChestGroup.setDepth(3);
         });
+        // SMALL LIGHTPILLARS
+        const smallLightPillarGroup = this.physics.add.staticGroup({
+            classType: smallLightPillar
+        });
+        const smallLightPillarLayer = Ebene1.getObjectLayer('LightPillars');
+        smallLightPillarLayer?.objects.forEach(smallLightPillarObj =>{
+            smallLightPillarGroup.get(smallLightPillarObj.x!+smallLightPillarObj.width!*0.5,smallLightPillarObj.y!-smallLightPillarObj.height!*0.5,'small_lightPillar')
+            smallLightPillarGroup.setDepth(3);
+        });
+        // const normalPillar = this.add.sprite(100,100,'normal_lightPillar').setDepth(3);
+        // normalPillar.setPipeline('Light2D');
+        // this.time.delayedCall(1000,()=>{
+        //     normalPillar.play('normal-lightPillar-Glow')
+        // })
+
         //SPELLS
         this.spell1 = this.physics.add.group({
             classType: Phaser.Physics.Arcade.Image,
@@ -75,8 +93,8 @@ export class Ebene1Scene extends Phaser.Scene {
         //Z ACHSE FUER BELEUCHTUNG
         this.lights.enable().setAmbientColor(0x000000);
         this.lightManager = new LightManager(this);
-        this.playerlight = this.lightManager.addLight(this.player.x, this.player.y, 0xffffff,70,0.8);
-        this.spell1light = this.lightManager.addLight(this.player.x, this.player.y, 0xFFA500,30,0.8);
+        this.playerlight = this.lightManager.addLight(this.player.x, this.player.y, 0xD3D3D3,60,0.6);
+        this.spell1light = this.lightManager.addLight(this.player.x, this.player.y, 0xFFA500,0,0.8);
         this.lightManager.toggleAllLights(true);
         this.lightManager.setLightVisible(this.spell1light,false);
         
@@ -90,9 +108,8 @@ export class Ebene1Scene extends Phaser.Scene {
         Ebene1Ground.setDepth(3);
         this.player.setDepth(4);
         
-        //LIGHTPILLARS
-        const normalPillar = this.add.sprite(100,100,'normal-lightPillar-Off').setDepth(3);
-        normalPillar.setPipeline('Light2D');
+        
+
         //ENEMY1 SLIME        
         createSlimeAnimation(this.anims);
         this.slimes = this.physics.add.group({
@@ -131,23 +148,34 @@ export class Ebene1Scene extends Phaser.Scene {
         this.physics.add.collider(this.player, Ebene1Walls);
         this.physics.add.collider(this.slimes, Ebene1Walls);
         this.physics.add.collider(this.slimes, this.slimes);
-        this.physics.add.collider(this.player,normalChestGroup, this.playerNormalChestCollisionHandler,undefined,this)
+        this.physics.add.collider(this.player,normalChestGroup, this.playerNormalChestCollisionHandler,undefined,this);
+        this.physics.add.collider(this.player,smallLightPillarGroup, this.playerSmallLightPillarCollisionHandler,undefined,this);
         this.physics.add.collider(this.slimes, normalChestGroup);
+        this.physics.add.collider(this.slimes, smallLightPillarGroup);
         this.playerSlimeCollider = this.physics.add.collider(this.slimes, this.player, this.slimePlayerCollisionHandler, undefined, this)
         this.physics.add.collider(this.spell1, Ebene1Walls, this.spell1WallsCollisionHandler, undefined, this);
         this.physics.add.collider(this.spell1, this.slimes, this.spell1SlimeCollisionHandler, undefined, this);
+
+        
+        sceneEvents.on('glow-Small-Pillar', () => {
+            //small pillar beleuchtung
+            this.lightManager.addLight(this.lightPillarPositionx, this.lightPillarPositiony, 0x9370DB, 85, 0.8);
+          });
     }
     //COLLSIONHANDLER
     //PLAYER -> NORMALCHEST
     private playerNormalChestCollisionHandler(obj1:any,obj2:any){
         const chest = obj2 as normalChest;
         this.player.setNormalChest(chest);
-        this.toggleSceneVisibility('GemManager', 1500);
+        this.toggleSceneVisibility('GemManager', 2000);
         const scene = this.scene.get('HearthManager');
         scene.sys.setVisible(false);
-
-        
-
+    }
+    //PLAYER -> SMALLLIGHTPILLAR
+    private playerSmallLightPillarCollisionHandler(obj1:any,obj2:any){
+        const lightPillar = obj2 as smallLightPillar;
+        this.player.setSmallLightPillar(lightPillar);
+        this.setlightPillarPosition(lightPillar.x,lightPillar.y)
     }
     //SLIME -> PLAYER
     private slimePlayerCollisionHandler(obj1: any, slimeobj: any) {
@@ -171,14 +199,11 @@ export class Ebene1Scene extends Phaser.Scene {
         this.spell1Collide = true
         spell1.destroy()
         slime.handleSlimeHit();
-        
-
         if (slime.slimehealth <= 0) {
             setTimeout(() => {
             slime.destroy()
             this.slimes.killAndHide(slime);
               }, 950);
-            
         }
     }
     //SPELL1 WALLS
@@ -195,7 +220,11 @@ export class Ebene1Scene extends Phaser.Scene {
             scene.sys.setVisible(false);
         });
     }
-
+    private setlightPillarPosition(x:number,y:number){
+        this.lightPillarPositionx = x;
+        this.lightPillarPositiony = y;
+    }
+    
     update() {
         //UPDATE LIGHT MANAGER
         this.lightManager.update();

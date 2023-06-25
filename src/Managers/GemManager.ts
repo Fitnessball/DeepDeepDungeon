@@ -19,6 +19,7 @@ export class GemManager extends Phaser.Scene{
             gemsImage.setPosition(totalWidth / 2 - gemsImage.width/2, 0);
         }
         gemsLabel.setOrigin(0.5);
+        gemsImage.setScale(0.8,0.8);
         container.add(gemsImage);
         container.add(gemsLabel);
         updateTextAndImagePosition();

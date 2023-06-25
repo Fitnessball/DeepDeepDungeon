@@ -5,7 +5,7 @@ export class normalChest extends Phaser.Physics.Arcade.Sprite{
         super(scene,x,y,texture,frame)
         //start mit chest die zu ist
         this.play('normal-Chest-Closed');
-        this.setPipeline('Light2D')
+        this.setPipeline('Light2D');
     }
     normalChestOpen(){
         if(this.anims.currentAnim?.key === 'normal-Chest-Open'){return 0}

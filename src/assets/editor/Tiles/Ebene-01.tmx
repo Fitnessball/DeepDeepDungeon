@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="41">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="70">
  <editorsettings>
   <export target="../../TileSets/Ebene-022.json" format="json"/>
  </editorsettings>
@@ -161,6 +161,9 @@
  </tileset>
  <tileset firstgid="33" name="normal_Chest" tilewidth="16" tileheight="16" tilecount="5" columns="5">
   <image source="../../sprites/Objects/chests/normal_Chest-Sheet.png" width="80" height="16"/>
+ </tileset>
+ <tileset firstgid="38" name="Small_LightPillar-Sheet" tilewidth="16" tileheight="23" tilecount="7" columns="7">
+  <image source="../../sprites/Objects/lightPillar/Small_LightPillar-Sheet.png" width="112" height="23"/>
  </tileset>
  <layer id="3" name="Ground" width="100" height="100" locked="1">
   <data encoding="csv">
@@ -503,5 +506,21 @@
   <object id="37" gid="33" x="64" y="48" width="16" height="16"/>
   <object id="38" gid="33" x="96" y="48" width="16" height="16"/>
   <object id="39" gid="33" x="112" y="208" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="7" name="LightPillars">
+  <object id="56" gid="38" x="128" y="96" width="16" height="23"/>
+  <object id="57" gid="38" x="16" y="96" width="16" height="23"/>
+  <object id="58" gid="38" x="112" y="144" width="16" height="23"/>
+  <object id="59" gid="38" x="32" y="208" width="16" height="23"/>
+  <object id="60" gid="38" x="256" y="288" width="16" height="23"/>
+  <object id="61" gid="38" x="208" y="208" width="16" height="23"/>
+  <object id="62" gid="38" x="128" y="368" width="16" height="23"/>
+  <object id="63" gid="38" x="80" y="448" width="16" height="23"/>
+  <object id="64" gid="38" x="336" y="304" width="16" height="23"/>
+  <object id="65" gid="38" x="480" y="256" width="16" height="23"/>
+  <object id="66" gid="38" x="512" y="416" width="16" height="23"/>
+  <object id="67" gid="38" x="448" y="416" width="16" height="23"/>
+  <object id="68" gid="38" x="464" y="128" width="16" height="23"/>
+  <object id="69" gid="38" x="384" y="64" width="16" height="23"/>
  </objectgroup>
 </map>
