@@ -36,7 +36,7 @@ export class Ebene1Scene extends Phaser.Scene {
     }
 
     create() {
-        //CHESTS
+        //CHESTS AND LIGHTS
         ObjectsAnimation(this.anims);
         //ICONS
         createIconsAnimation(this.anims);
@@ -90,7 +90,9 @@ export class Ebene1Scene extends Phaser.Scene {
         Ebene1Ground.setDepth(3);
         this.player.setDepth(4);
         
-      
+        //LIGHTPILLARS
+        const normalPillar = this.add.sprite(100,100,'normal-lightPillar-Off').setDepth(3);
+        normalPillar.setPipeline('Light2D');
         //ENEMY1 SLIME        
         createSlimeAnimation(this.anims);
         this.slimes = this.physics.add.group({
@@ -130,6 +132,7 @@ export class Ebene1Scene extends Phaser.Scene {
         this.physics.add.collider(this.slimes, Ebene1Walls);
         this.physics.add.collider(this.slimes, this.slimes);
         this.physics.add.collider(this.player,normalChestGroup, this.playerNormalChestCollisionHandler,undefined,this)
+        this.physics.add.collider(this.slimes, normalChestGroup);
         this.playerSlimeCollider = this.physics.add.collider(this.slimes, this.player, this.slimePlayerCollisionHandler, undefined, this)
         this.physics.add.collider(this.spell1, Ebene1Walls, this.spell1WallsCollisionHandler, undefined, this);
         this.physics.add.collider(this.spell1, this.slimes, this.spell1SlimeCollisionHandler, undefined, this);

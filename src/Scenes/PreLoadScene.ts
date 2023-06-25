@@ -75,12 +75,19 @@ export class PreLoadScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
+        //GEMS
+        this.load.image('normal_Gem','../assets/sprites/icons/normal_Gem.png')
         //SPELLS
         this.load.image('spell1','../assets/sprites/Spells/Spell2.png');
         //CHESTS
         this.load.spritesheet('normal_Chest','../assets/sprites/Objects/chests/normal_Chest-Sheet.png',{
             frameWidth: 16,
             frameHeight: 16
+        });
+        //LIGHTPILLARS
+        this.load.spritesheet('normal_lightPillar','../assets/sprites/Objects/lightPillar/normal_LightPillar-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 32
         });
     }
     create() {
