@@ -75,6 +75,8 @@ export class PreLoadScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
+        //SPHERES
+        this.load.image('small_Sphere','../assets/sprites/icons/small_LightPillar_Sphere.png');
         //GEMS
         this.load.image('normal_Gem','../assets/sprites/icons/normal_Gem.png')
         //SPELLS
@@ -87,11 +89,11 @@ export class PreLoadScene extends Phaser.Scene {
         //LIGHTPILLARS
         this.load.spritesheet('small_lightPillar','../assets/sprites/Objects/lightPillar/Small_LightPillar-Sheet.png',{
             frameWidth: 16,
-            frameHeight: 23
+            frameHeight: 24
         });
-        this.load.spritesheet('small_lightPillar_Stays','../assets/sprites/Objects/lightPillar/normal_LightPillar_Stays-Sheet.png',{
+        this.load.spritesheet('small_lightPillar_Stays','../assets/sprites/Objects/lightPillar/Small_LightPillar_Stays-Sheet.png',{
             frameWidth: 16,
-            frameHeight: 23
+            frameHeight: 24
         });
     }
     create() {

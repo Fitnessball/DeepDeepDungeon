@@ -25,15 +25,23 @@ class LightManager {
       light.setVisible(on)
     }
     public update(): void {
-      // Update logic for lights
     }
      public reduceLightRadius(light: Phaser.GameObjects.Light, amount: number, deltaTime: number, step: number = 1): void {
-        
          const reduction = amount
          const newRadius = light.radius - reduction;
          light.radius = Phaser.Math.Clamp(newRadius, 0, light.radius - step);
-      
        }
+       public increaseLightRadius(light: Phaser.GameObjects.Light, amount: number, step: number = 1): void {
+        const increase = amount;
+        light.radius = Phaser.Math.Clamp(increase, 0, light.radius + step);
+      }
+       public reduceAllLightRadius(amount: number, deltaTime: number, step: number = 1): void {
+        for (const light of this.lights) {
+        const reduction = amount
+        const newRadius = light.radius - reduction;
+        light.radius = Phaser.Math.Clamp(newRadius, 0, light.radius - step);
+        }
+      }
     public setLightRadius(light:Phaser.GameObjects.Light,radius:number){
         light.setRadius(radius);
     }

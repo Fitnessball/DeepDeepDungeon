@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="70">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="165">
  <editorsettings>
   <export target="../../TileSets/Ebene-022.json" format="json"/>
  </editorsettings>
@@ -162,8 +162,11 @@
  <tileset firstgid="33" name="normal_Chest" tilewidth="16" tileheight="16" tilecount="5" columns="5">
   <image source="../../sprites/Objects/chests/normal_Chest-Sheet.png" width="80" height="16"/>
  </tileset>
- <tileset firstgid="38" name="Small_LightPillar-Sheet" tilewidth="16" tileheight="23" tilecount="7" columns="7">
-  <image source="../../sprites/Objects/lightPillar/Small_LightPillar-Sheet.png" width="112" height="23"/>
+ <tileset firstgid="38" name="Small_LightPillar_Sphere" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="../../sprites/Icons/Small_LightPillar_Sphere.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="39" name="Small_LightPillar-Sheet" tilewidth="16" tileheight="24" tilecount="9" columns="9">
+  <image source="../../sprites/Objects/lightPillar/Small_LightPillar-Sheet.png" width="144" height="24"/>
  </tileset>
  <layer id="3" name="Ground" width="100" height="100" locked="1">
   <data encoding="csv">
@@ -477,50 +480,60 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="Slimes">
-  <object id="9" gid="31" x="544.667" y="173" width="16" height="16"/>
-  <object id="10" gid="31" x="480.333" y="93" width="16" height="16"/>
-  <object id="11" gid="31" x="351" y="166.667" width="16" height="16"/>
-  <object id="12" gid="31" x="356.667" y="79.6667" width="16" height="16"/>
-  <object id="13" gid="31" x="575.333" y="92.3333" width="16" height="16"/>
-  <object id="14" gid="31" x="506" y="271.667" width="16" height="16"/>
-  <object id="15" gid="31" x="512.667" y="462.667" width="16" height="16"/>
-  <object id="16" gid="31" x="450.667" y="462" width="16" height="16"/>
-  <object id="17" gid="31" x="342.333" y="416" width="16" height="16"/>
-  <object id="18" gid="31" x="377" y="384" width="16" height="16"/>
-  <object id="19" gid="31" x="353" y="269.667" width="16" height="16"/>
-  <object id="20" gid="31" x="429.333" y="294.667" width="16" height="16"/>
-  <object id="21" gid="31" x="278.667" y="453" width="16" height="16"/>
-  <object id="23" gid="31" x="192.333" y="368" width="16" height="16"/>
-  <object id="25" gid="31" x="201.667" y="245.333" width="16" height="16"/>
-  <object id="26" gid="31" x="278.333" y="211.333" width="16" height="16"/>
-  <object id="29" gid="31" x="76.3333" y="242.333" width="16" height="16"/>
-  <object id="30" gid="31" x="31.3333" y="385.333" width="16" height="16"/>
-  <object id="32" gid="31" x="33.3333" y="451" width="16" height="16"/>
-  <object id="33" gid="31" x="429" y="138" width="16" height="16"/>
-  <object id="34" gid="31" x="500" y="151" width="16" height="16"/>
-  <object id="35" gid="31" x="256" y="367" width="16" height="16"/>
+ <objectgroup id="11" name="LightPillars">
+  <object id="115" gid="39" x="128" y="128" width="16" height="24"/>
+  <object id="116" gid="39" x="16" y="96" width="16" height="24"/>
+  <object id="117" gid="39" x="16" y="144" width="16" height="24"/>
+  <object id="125" gid="39" x="176" y="208" width="16" height="24"/>
+  <object id="126" gid="39" x="16" y="208" width="16" height="24"/>
+  <object id="128" gid="39" x="80" y="448" width="16" height="24"/>
+  <object id="129" gid="39" x="240" y="336" width="16" height="24"/>
+  <object id="160" gid="39" x="400" y="256" width="16" height="24"/>
+  <object id="161" gid="39" x="448" y="256" width="16" height="24"/>
+  <object id="162" gid="39" x="512" y="416" width="16" height="24"/>
+  <object id="163" gid="39" x="512" y="144" width="16" height="24"/>
+  <object id="164" gid="39" x="336" y="192" width="16" height="24"/>
  </objectgroup>
- <objectgroup id="6" name="NormalChests">
-  <object id="36" gid="33" x="32" y="48" width="16" height="16"/>
-  <object id="37" gid="33" x="64" y="48" width="16" height="16"/>
-  <object id="38" gid="33" x="96" y="48" width="16" height="16"/>
-  <object id="39" gid="33" x="112" y="208" width="16" height="16"/>
+ <objectgroup id="13" name="SmallSpheres" locked="1">
+  <object id="130" gid="38" x="128" y="80" width="16" height="16"/>
+  <object id="131" gid="38" x="16" y="64" width="16" height="16"/>
+  <object id="132" gid="38" x="16" y="256" width="16" height="16"/>
+  <object id="133" gid="38" x="96" y="256" width="16" height="16"/>
+  <object id="152" gid="38" x="464" y="304" width="16" height="16"/>
+  <object id="153" gid="38" x="208" y="432" width="16" height="16"/>
+  <object id="154" gid="38" x="16" y="416" width="16" height="16"/>
+  <object id="155" gid="38" x="272" y="224" width="16" height="16"/>
+  <object id="156" gid="38" x="416" y="144" width="16" height="16"/>
+  <object id="157" gid="38" x="496" y="96" width="16" height="16"/>
+  <object id="158" gid="38" x="336" y="416" width="16" height="16"/>
+  <object id="159" gid="38" x="480" y="464" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="7" name="LightPillars">
-  <object id="56" gid="38" x="128" y="96" width="16" height="23"/>
-  <object id="57" gid="38" x="16" y="96" width="16" height="23"/>
-  <object id="58" gid="38" x="112" y="144" width="16" height="23"/>
-  <object id="59" gid="38" x="32" y="208" width="16" height="23"/>
-  <object id="60" gid="38" x="256" y="288" width="16" height="23"/>
-  <object id="61" gid="38" x="208" y="208" width="16" height="23"/>
-  <object id="62" gid="38" x="128" y="368" width="16" height="23"/>
-  <object id="63" gid="38" x="80" y="448" width="16" height="23"/>
-  <object id="64" gid="38" x="336" y="304" width="16" height="23"/>
-  <object id="65" gid="38" x="480" y="256" width="16" height="23"/>
-  <object id="66" gid="38" x="512" y="416" width="16" height="23"/>
-  <object id="67" gid="38" x="448" y="416" width="16" height="23"/>
-  <object id="68" gid="38" x="464" y="128" width="16" height="23"/>
-  <object id="69" gid="38" x="384" y="64" width="16" height="23"/>
+ <objectgroup id="12" name="NormalChests" locked="1">
+  <object id="118" gid="33" x="112" y="48" width="16" height="16"/>
+  <object id="119" gid="33" x="32" y="48" width="16" height="16"/>
+  <object id="120" gid="33" x="64" y="48" width="16" height="16"/>
+  <object id="121" gid="33" x="112" y="208" width="16" height="16"/>
+  <object id="122" gid="33" x="208" y="208" width="16" height="16"/>
+  <object id="123" gid="33" x="32" y="368" width="16" height="16"/>
+  <object id="124" gid="33" x="160" y="368" width="16" height="16"/>
+  <object id="147" gid="33" x="336" y="256" width="16" height="16"/>
+  <object id="148" gid="33" x="384" y="384" width="16" height="16"/>
+  <object id="149" gid="33" x="496" y="256" width="16" height="16"/>
+  <object id="150" gid="33" x="400" y="64" width="16" height="16"/>
+  <object id="151" gid="33" x="512" y="64" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="14" name="Slimes" locked="1">
+  <object id="135" gid="31" x="96" y="288" width="16" height="16"/>
+  <object id="136" gid="31" x="128" y="416" width="16" height="16"/>
+  <object id="137" gid="31" x="208" y="272" width="16" height="16"/>
+  <object id="138" gid="31" x="272" y="448" width="16" height="16"/>
+  <object id="139" gid="31" x="368" y="288" width="16" height="16"/>
+  <object id="140" gid="31" x="512" y="288" width="16" height="16"/>
+  <object id="141" gid="31" x="448" y="448" width="16" height="16"/>
+  <object id="142" gid="31" x="512" y="448" width="16" height="16"/>
+  <object id="143" gid="31" x="368" y="112" width="16" height="16"/>
+  <object id="144" gid="31" x="368" y="160" width="16" height="16"/>
+  <object id="145" gid="31" x="544" y="96" width="16" height="16"/>
+  <object id="146" gid="31" x="544" y="160" width="16" height="16"/>
  </objectgroup>
 </map>

@@ -106,7 +106,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
 
         if(!spell1){return}
         const playerdirection = animpart[2]
-        console.dir(playerdirection)
+        //console.dir(playerdirection)
         const vec = new Phaser.Math.Vector2(0,0);
         this.playerState = PlayerState.CAST_SPELL;
         
@@ -181,7 +181,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         }
         if(this.playerState === PlayerState.IDLE){
             
-         const vel = 45;
+         const vel = 60;
          if(cursors.left.isDown){
              this.setVelocity(-vel,0);
              this.anims.play('player-walk-right',true);

@@ -14,7 +14,7 @@ export const ObjectsAnimation = (anims: Phaser.Animations.AnimationManager)=>{
     });
     anims.create({
         key: 'small-lightPillar-Glow',
-        frames: anims.generateFrameNumbers('small_lightPillar', { start: 0, end: 5 }),
+        frames: anims.generateFrameNumbers('small_lightPillar', { start: 0, end: 8 }),
         frameRate: 10,
         repeat: 0
     });
@@ -26,10 +26,10 @@ export const ObjectsAnimation = (anims: Phaser.Animations.AnimationManager)=>{
     });
     anims.create({
         key: 'small-lightPillar-Stays',
-        frames: anims.generateFrameNumbers('small_lightPillar_Stays', { start: 0, end: 3 }),
-        frameRate: 10,
+        frames: anims.generateFrameNumbers('small_lightPillar_Stays', { start: 0, end: 9 }),
+        frameRate: 5,
         repeat: -1
     });
-
+    
     
 }
