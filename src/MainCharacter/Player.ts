@@ -2,7 +2,7 @@ import 'phaser';
 import { normalChest } from '../Objects/normalChest';
 import { sceneEvents } from '../Events/MainEvents';
 import { smallLightPillar } from '../Objects/smallLightPillar';
-import LightManager from '../Managers/LightManager';
+import { smallSphere } from '../Objects/smallSphere';
 
 declare global{
     namespace Phaser.GameObjects{
@@ -27,12 +27,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     private healthTimedt = 0;
     private _playerhealth = 3;
     private _gems = 0;
+    private _spheres = 0;
     private spell1?: Phaser.Physics.Arcade.Group;
     private direction = false;
     private playerState = PlayerState.IDLE;
     private activeNormalChest?: normalChest;
     private activeSmallLightPillar?: smallLightPillar;
-    private lightManager?: LightManager
+    private activeSmallSphere: smallSphere;
     get playerhealth(){return this._playerhealth}
     constructor(scene: Phaser.Scene, x:number,y:number,texture:string,frame?:string|number){
         super(scene,x,y,texture,frame)
@@ -50,10 +51,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     setNormalChest(chest: normalChest){
         this.activeNormalChest = chest;
     }
-    
     setSmallLightPillar(lightPillar: smallLightPillar){
         this.activeSmallLightPillar = lightPillar;
-
+    }
+    setSmallSphere(smallSphere: smallSphere){
+        this.activeSmallSphere = smallSphere;
+        this._spheres += 1;
+        sceneEvents.emit('player-spheres-changed',this._spheres);
     }
     //added schaden auf collision
     handleEnemyHit(dirvec:Phaser.Math.Vector2){
@@ -61,6 +65,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         if(this.currentHealth === CurrentHealth.DAMAGE){return}
 
         --this._playerhealth
+        console.log(this._playerhealth)
         if(this._playerhealth <= 0){
             //death
             this.currentHealth = CurrentHealth.DEAD
@@ -160,10 +165,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     }
     }
 
-
+    
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys){
         if(this.currentHealth === CurrentHealth.DAMAGE || this.currentHealth === CurrentHealth.DEAD){return}
-        
+        if(this.activeSmallSphere){
+            
+        }
         if(!cursors){return}
         if(Phaser.Input.Keyboard.JustDown(cursors.space)){
             if(this.playerState === PlayerState.CAST_SPELL){return}
@@ -173,7 +180,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
                 sceneEvents.emit('player-gems-changed',this._gems);
                 //console.log(this._gems)
             }else if(this.activeSmallLightPillar){
-                this.activeSmallLightPillar.smallLightPillarGlow();
+                
+                if(this._spheres !== 0){
+                const spheres = this.activeSmallLightPillar.smallLightPillarGlow();
+                this._spheres -= spheres;
+                }
+                sceneEvents.emit('player-spheres-changed',this._spheres);
             }else{
                 this.castSpell1()
             }

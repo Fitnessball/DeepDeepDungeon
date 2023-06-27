@@ -9,7 +9,7 @@ export class smallLightPillar extends Phaser.Physics.Arcade.Sprite{
         this.setPipeline('Light2D');
     }
     smallLightPillarGlow(){
-        if(this.anims.currentAnim?.key === 'small-lightPillar-Glow'||this.anims.currentAnim?.key==='small-lightPillar-Stays'){return}
+        if(this.anims.currentAnim?.key === 'small-lightPillar-Glow'||this.anims.currentAnim?.key==='small-lightPillar-Stays'){return 0}
         this.play('small-lightPillar-Glow',true);
         
         setTimeout(() => {
@@ -17,5 +17,6 @@ export class smallLightPillar extends Phaser.Physics.Arcade.Sprite{
               }, 1300);
          
         sceneEvents.emit('glow-Small-Pillar');
+        return 1
     }
 }
