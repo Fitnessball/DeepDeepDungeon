@@ -3,6 +3,7 @@ import { normalChest } from '../Objects/normalChest';
 import { sceneEvents } from '../Events/MainEvents';
 import { smallLightPillar } from '../Objects/smallLightPillar';
 import { smallSphere } from '../Objects/smallSphere';
+import { hearthChest } from '../Objects/hearthChest';
 
 declare global{
     namespace Phaser.GameObjects{
@@ -32,6 +33,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     private direction = false;
     private playerState = PlayerState.IDLE;
     private activeNormalChest?: normalChest;
+    private activeHearthChest?: hearthChest;
     private activeSmallLightPillar?: smallLightPillar;
     private activeSmallSphere: smallSphere;
     get playerhealth(){return this._playerhealth}
@@ -50,6 +52,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     //SETCHESTS
     setNormalChest(chest: normalChest){
         this.activeNormalChest = chest;
+    }
+    setHearthChest(chest: hearthChest){
+        this.activeHearthChest = chest;
     }
     setSmallLightPillar(lightPillar: smallLightPillar){
         this.activeSmallLightPillar = lightPillar;
@@ -148,17 +153,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
 
         spell1.setPipeline('Light2D');
         
-        spell1.setDepth(3)
+        spell1.setDepth(3);
         spell1.setActive(true);
         spell1.setVisible(true);
 
         spell1.setRotation(rotationangle);
-        spell1.x += vec.x * 8;
-        spell1.y += vec.y * 8;
+        spell1.x += vec.x;
+        spell1.y += vec.y;
 
-        spell1.setVelocity(vec.x * 150, vec.y * 150);
+        spell1.setVelocity(vec.x * 200, vec.y * 200);
         setTimeout(() => {
-            // Reset player state after the delay
             this.playerState = PlayerState.IDLE;
           }, 350);
 
@@ -168,9 +172,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys){
         if(this.currentHealth === CurrentHealth.DAMAGE || this.currentHealth === CurrentHealth.DEAD){return}
-        if(this.activeSmallSphere){
-            
-        }
+
         if(!cursors){return}
         if(Phaser.Input.Keyboard.JustDown(cursors.space)){
             if(this.playerState === PlayerState.CAST_SPELL){return}
@@ -179,6 +181,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
                 this._gems += gems;
                 sceneEvents.emit('player-gems-changed',this._gems);
                 //console.log(this._gems)
+            }else if(this.activeHearthChest){
+                const [hearth, gems] = this.activeHearthChest.hearthChestOpen(this._playerhealth,this._gems);
+                this._playerhealth += hearth
+                this._gems += gems
+                console.log(this._playerhealth)
+                console.log(this._gems)
+                sceneEvents.emit('player-gems-changed',this._gems)
+
             }else if(this.activeSmallLightPillar){
                 
                 if(this._spheres !== 0){
@@ -199,6 +209,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
              this.anims.play('player-walk-right',true);
              this.setFlipX(true);
              this.direction = true
+             this.activeHearthChest = undefined;
              this.activeNormalChest = undefined;
              this.activeSmallLightPillar = undefined;
          }else if(cursors.right?.isDown){
@@ -206,6 +217,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
              this.anims.play('player-walk-right',true);
              this.setFlipX(false);
              this.direction = false
+             this.activeHearthChest = undefined;
              this.activeNormalChest = undefined;
              this.activeSmallLightPillar = undefined;
          }else if(cursors.down?.isDown){
@@ -213,11 +225,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
              this.anims.play('player-walk-down',true);
              this.direction = false
              this.activeNormalChest = undefined;
+             this.activeHearthChest = undefined;
              this.activeSmallLightPillar = undefined;
          }else if(cursors.up?.isDown){
              this.setVelocity(0,-vel);
              this.anims.play('player-walk-up',true);
              this.direction = false
+             this.activeHearthChest = undefined;
+             this.activeNormalChest = undefined;
+             this.activeSmallLightPillar = undefined;
          }else{
               const animpart = this.anims.currentAnim?.key.split('-');
               if(animpart){
@@ -236,6 +252,5 @@ Phaser.GameObjects.GameObjectFactory.register('player',function(this: Phaser.Gam
     this.scene.physics.world.enableBody(sprite,Phaser.Physics.Arcade.DYNAMIC_BODY);
     sprite.body?.setSize(sprite.width * 0.8, sprite.height * 1)   
     sprite.setPipeline('Light2D');
-
     return sprite;
 });

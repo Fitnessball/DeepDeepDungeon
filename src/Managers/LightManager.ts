@@ -13,7 +13,12 @@ class LightManager {
       this.lights.push(light);
       return light;
     }
-  
+    public removeAllLights(): void {
+      for (const light of this.lights) {
+        this.scene.lights.removeLight(light);
+      }
+      this.lights = [];
+    }
     public removeLight(light: Phaser.GameObjects.Light): void {
         const index = this.lights.indexOf(light);
         if (index > -1) {

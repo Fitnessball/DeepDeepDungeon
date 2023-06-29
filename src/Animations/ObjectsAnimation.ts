@@ -12,6 +12,19 @@ export const ObjectsAnimation = (anims: Phaser.Animations.AnimationManager)=>{
         frameRate: 10,
         repeat: 0
     });
+
+    anims.create({
+        key: 'hearth-Chest-Open',
+        frames: anims.generateFrameNumbers('hearth_Chest', { start: 0, end: 4 }),
+        frameRate: 10,
+        repeat: 0
+    });
+    anims.create({
+        key: 'hearth-Chest-Closed',
+        frames: anims.generateFrameNumbers('hearth_Chest', { start: 0, end: 0 }),
+        frameRate: 10,
+        repeat: 0
+    });
     anims.create({
         key: 'small-lightPillar-Glow',
         frames: anims.generateFrameNumbers('small_lightPillar', { start: 0, end: 8 }),

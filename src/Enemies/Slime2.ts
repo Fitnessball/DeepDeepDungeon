@@ -19,18 +19,18 @@ const randomDirection = (sameDirection: Directions) => {
     }
     return changeDirection;
 }
-export class Slime extends Phaser.Physics.Arcade.Sprite{
+export class Slime2 extends Phaser.Physics.Arcade.Sprite{
     private direction = Directions.RIGHT;  
     private changeWalkEvent: Phaser.Time.TimerEvent
-    private _slimehealth = 2;
+    private _slimehealth = 3;
     private currentHealth = CurrentHealth.IDLE
     private healthTimedt = 0;
     get slimehealth(){return this._slimehealth}
     constructor(scene:Phaser.Scene, x: number, y:number, texture: string, frame?: string | number){
         super(scene,x,y,texture,frame);
-        this.anims.play('enemy1-walk'); 
+        this.anims.play('enemy2-walk'); 
         this.setPipeline('Light2D');
-        this.setDepth(3);
+        this.setDepth(10);
         this.setActive(true)
         this.setVisible(true)
         scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE,this.slimeTileCollisionHandler,this)
@@ -62,7 +62,7 @@ export class Slime extends Phaser.Physics.Arcade.Sprite{
         if(this._slimehealth <= 0){
             //death
             this.currentHealth = CurrentHealth.DEAD
-            this.anims.play('enemy1-death');
+            this.anims.play('enemy2-death');
             this.setVelocity(0,0);
 
         }else{
@@ -90,7 +90,7 @@ export class Slime extends Phaser.Physics.Arcade.Sprite{
                 this.currentHealth = CurrentHealth.DEAD
                 break
         }
-        const vel = 30;
+        const vel = 45;
         //||this.currentHealth===CurrentHealth.DAMAGE um knockback der slimes zu deaktivieren
         if(this.currentHealth===CurrentHealth.IDLE){
         switch (this.direction){
@@ -100,20 +100,20 @@ export class Slime extends Phaser.Physics.Arcade.Sprite{
                 break
             case Directions.LEFT:
                 this.setVelocity(-vel,0);
-                this.anims.play('enemy1-walk',true); 
+                this.anims.play('enemy2-walk',true); 
                 break
             case Directions.UP:
                 this.setVelocity(0,-vel);
-                this.anims.play('enemy1-walk',true); 
+                this.anims.play('enemy2-walk',true); 
                 break
             case Directions.DOWN:
-                this.anims.play('enemy1-walk',true); 
+                this.anims.play('enemy2-walk',true); 
                 this.setVelocity(0,vel);
 
                 break
             case Directions.STAY:
                 this.setVelocity(0,0);
-                this.anims.play('enemy1-idle',true); 
+                this.anims.play('enemy2-idle',true); 
                 break
         }
     }}

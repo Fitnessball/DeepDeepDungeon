@@ -5,8 +5,10 @@ export class PreLoadScene extends Phaser.Scene {
     preload() {
 
         //EBENE1
-        this.load.image('tileEbene1', '../assets/images/Tilesets/TileSetEbene1ex.png');
-        this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-022.json');
+        this.load.image('tileEbene', '../assets/images/Tilesets/TileSetEbene1ex.png');
+        this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-01.json');
+        this.load.tilemapTiledJSON('Ebene2', '../assets/TileSets/Ebene-02.json');
+
         //CHARACTER
         //idles
         this.load.spritesheet('player_idle_down', '../assets/sprites/player/idle/1_Character_idle_down-Sheet.png', {
@@ -52,7 +54,7 @@ export class PreLoadScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
-        //ENEMY1 SLIME
+        //ENEMY1 SLIME1
         //idle
         this.load.spritesheet('enemy1_idle', '../assets/sprites/enemy1/Slime_idle-Sheet.png', {
             frameWidth: 16,
@@ -68,6 +70,38 @@ export class PreLoadScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         })
+        //ENEMY2 SLIME2
+        //idle
+        this.load.spritesheet('enemy2_idle', '../assets/sprites/enemy2/Slime2_idle-Sheet.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        //walk
+        this.load.spritesheet('enemy2_walk', '../assets/sprites/enemy2/Slime2_walk-Sheet.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        //death
+        this.load.spritesheet('enemy2_death','../assets/sprites/enemy2/Slime2_death-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        })
+        //ENEMY3 SLIME3
+        //idle
+        this.load.spritesheet('enemy3_idle', '../assets/sprites/enemy3/Slime3_idle-Sheet.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        //walk
+        this.load.spritesheet('enemy3_walk', '../assets/sprites/enemy3/Slime3_walk-Sheet.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        //death
+        this.load.spritesheet('enemy3_death','../assets/sprites/enemy3/Slime3_death-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        })
         //HERZEN
         this.load.image('herzLeer', '../assets/sprites/icons/HerzLeer.png');
         this.load.image('herzVoll', '../assets/sprites/icons/HerzVoll.png');
@@ -75,6 +109,8 @@ export class PreLoadScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
+        //STAIRS
+        this.load.image('Stairs','../assets/sprites/Objects/stairs/Stairs.png');
         //SPHERES
         this.load.image('small_Sphere','../assets/sprites/icons/small_LightPillar_Sphere.png');
         //GEMS
@@ -83,6 +119,10 @@ export class PreLoadScene extends Phaser.Scene {
         this.load.image('spell1','../assets/sprites/Spells/Spell2.png');
         //CHESTS
         this.load.spritesheet('normal_Chest','../assets/sprites/Objects/chests/normal_Chest-Sheet.png',{
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        this.load.spritesheet('hearth_Chest','../assets/sprites/Objects/chests/hearth_Chest-Sheet.png',{
             frameWidth: 16,
             frameHeight: 16
         });
