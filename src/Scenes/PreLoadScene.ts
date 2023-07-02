@@ -1,3 +1,8 @@
+import { createCharacterAnimation } from "../Animations/CharacterAnimations";
+import { createSlimeAnimation } from "../Animations/EnemieAnimations";
+import { createIconsAnimation } from "../Animations/IconsAnimations";
+import { ObjectsAnimation } from "../Animations/ObjectsAnimation";
+
 export class PreLoadScene extends Phaser.Scene {
     constructor() {
         super('preloadscene')
@@ -8,6 +13,51 @@ export class PreLoadScene extends Phaser.Scene {
         this.load.image('tileEbene', '../assets/images/Tilesets/TileSetEbene1ex.png');
         this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-01.json');
         this.load.tilemapTiledJSON('Ebene2', '../assets/TileSets/Ebene-02.json');
+
+        //MAINMENU
+        //Hintergrund
+        this.load.image('Background_MAINMENU','../assets/images/Buttons/MENU_Background.png')
+        //Start und Anleitung
+        this.load.image('BigButton_UP_START','../assets/images/Buttons/BigButton_UP_START.png')
+        this.load.image('BigButton_DOWN_START','../assets/images/Buttons/BigButton_DOWN_START.png')
+        this.load.image('BigButton_UP_ANLEITUNG','../assets/images/Buttons/BigButton_UP_ANLEITUNG.png')
+        this.load.image('BigButton_DOWN_ANLEITUNG','../assets/images/Buttons/BigButton_DOWN_ANLEITUNG.png')
+        //Zurück und Weiter
+        this.load.image('Weiter_DOWN','../assets/images/Buttons/Weiter_DOWN.png')
+        this.load.image('Weiter_UP','../assets/images/Buttons/Weiter_UP.png')
+        this.load.image('Zurück_DOWN','../assets/images/Buttons/Zurück_DOWN.png')
+        this.load.image('Zurück_UP','../assets/images/Buttons/Zurück_UP.png')
+        //STEUERUNG
+        //Pfeiltasten
+        this.load.image('ArrowKey_Down_DOWN','../assets/images/Buttons/Steuerung/ArrowKey_Down_DOWN.png')
+        this.load.image('ArrowKey_Down_UP','../assets/images/Buttons/Steuerung/ArrowKey_Down_UP.png')
+        this.load.image('ArrowKey_Up_DOWN','../assets/images/Buttons/Steuerung/ArrowKey_Up_DOWN.png')
+        this.load.image('ArrowKey_Up_UP','../assets/images/Buttons/Steuerung/ArrowKey_Up_UP.png')
+        this.load.image('ArrowKey_Left_DOWN','../assets/images/Buttons/Steuerung/ArrowKey_Left_DOWN.png')
+        this.load.image('ArrowKey_Left_UP','../assets/images/Buttons/Steuerung/ArrowKey_Left_UP.png')
+        this.load.image('ArrowKey_Right_DOWN','../assets/images/Buttons/Steuerung/ArrowKey_Right_DOWN.png')
+        this.load.image('ArrowKey_Right_UP','../assets/images/Buttons/Steuerung/ArrowKey_Right_UP.png')
+        //SpaceBar
+        this.load.image('Spacebar_DOWN','../assets/images/Buttons/Steuerung/Spacebar_DOWN.png')
+        this.load.image('Spacebar_UP','../assets/images/Buttons/Steuerung/Spacebar_UP.png')
+        //Text
+        this.load.image('Laufen_TEXT','../assets/images/Buttons/Text/Laufen.png')
+        this.load.image('IntundAng_TEXT','../assets/images/Buttons/Text/Interagieren und Angreifen.png')
+        this.load.image('Seite_2_TEXT','../assets/images/Buttons/Text/Seite_2_TEXT.png')
+        this.load.image('Ziel_TEXT','../assets/images/Buttons/Text/Ziel_TEXT.png')
+        this.load.image('Steuerung_TEXT','../assets/images/Buttons/Text/Steuerung_TEXT.png')
+        
+
+        //DeathScreen
+        this.load.image('MagieEntflossen_TEXT','../assets/images/Buttons/Text/MagieEntflossen_TEXT.png')
+
+        this.load.image('Hauptmenu_DOWN','../assets/images/Buttons/Hauptmenü_DOWN.png')
+        this.load.image('Hauptmenu_UP','../assets/images/Buttons/Hauptmenü_UP.png')
+        this.load.image('Wiederbeleben_DOWN','../assets/images/Buttons/Wiederbeleben_DOWN.png')
+        this.load.image('Wiederbeleben_UP','../assets/images/Buttons/Wiederbeleben_UP.png')
+        this.load.image('DEATH_Background','../assets/images/Buttons/DEATH_Background.png')
+
+
 
         //CHARACTER
         //idles
@@ -137,6 +187,11 @@ export class PreLoadScene extends Phaser.Scene {
         });
     }
     create() {
-        this.scene.start('ebene1scene');
+        ObjectsAnimation(this.anims);
+        createIconsAnimation(this.anims);
+        createSlimeAnimation(this.anims);
+        createCharacterAnimation(this.anims);
+        this.scene.start('MainMenu');
+
     }
 }

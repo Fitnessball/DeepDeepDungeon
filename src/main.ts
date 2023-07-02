@@ -1,24 +1,26 @@
 import 'phaser';
 import { PreLoadScene } from './Scenes/PreLoadScene';
-import { Ebene1Scene } from './Scenes/Ebene1Scene';
 import { HearthManager } from './Managers/HearthManager';
 import { GemManager } from './Managers/GemManager';
 import { SmallSphereManager } from './Managers/SmallSphereManager';
 import { PriceManager } from './Managers/PriceManager';
-import { Ebene2Scene } from './Scenes/Ebene2Scene';
+import { Ebene } from './Scenes/Ebene';
+import MainMenu from './Scenes/MainMenu';
+import DeathScene from './Scenes/DeathScene';
+
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.WEBGL,
     title: 'DeepDeepDungeon',
-    width: 320,
-    height: 320,
+    width: 220,
+    height: 220,
     backgroundColor: "#212121",
     //powerPreference: "high-performance",
     scene:[
-        PreLoadScene, Ebene1Scene,Ebene2Scene, HearthManager, GemManager, SmallSphereManager, PriceManager
+        PreLoadScene,DeathScene, MainMenu, Ebene, HearthManager, GemManager, SmallSphereManager, PriceManager
     ],
     scale: {
         // Größe des Screenformates
-        zoom:2,
+        zoom:3,
         parent: 'mygame',
         autoCenter: Phaser.Scale.CENTER_BOTH
     },

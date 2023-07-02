@@ -15,8 +15,8 @@ export class HearthManager extends Phaser.Scene{
         this.hearths.createMultiple({
             key:'herzVoll',
             setXY:{
-                x:144,
-                y:144,
+                x:94,
+                y:94,
                 stepX: 16
             },
             quantity: 3
@@ -24,7 +24,6 @@ export class HearthManager extends Phaser.Scene{
        sceneEvents.on('player-On-Health-Damage', this.playerHealthDamageHandler,this)
        this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
         sceneEvents.off('player-On-Health-Damage',this.playerHealthDamageHandler,this)
-
        })
     }
     private playerHealthDamageHandler(health:number){

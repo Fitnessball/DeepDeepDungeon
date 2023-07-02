@@ -15,7 +15,8 @@ declare global{
 enum CurrentHealth{
     IDLE,
     DAMAGE,
-    DEAD
+    DEAD,
+    INVIS
 }
 enum PlayerState{
     IDLE,
@@ -36,18 +37,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     private activeHearthChest?: hearthChest;
     private activeSmallLightPillar?: smallLightPillar;
     private activeSmallSphere: smallSphere;
+    private isInvincible: boolean;
     get playerhealth(){return this._playerhealth}
+    get playergems(){return this._gems}
     constructor(scene: Phaser.Scene, x:number,y:number,texture:string,frame?:string|number){
         super(scene,x,y,texture,frame)
         scene.physics.world.enable(this);
         this.setSize(this.width * 0.8, this.height * 1)
         this.anims.play('player-idle-down');
-        
-
+        this.isInvincible = false;
     }
     //SETSPELLS
     setSpell1(spell1:Phaser.Physics.Arcade.Group){
-        this.spell1 = spell1
+        this.spell1 = spell1;
     }
     //SETCHESTS
     setNormalChest(chest: normalChest){
@@ -66,17 +68,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
     }
     //added schaden auf collision
     handleEnemyHit(dirvec:Phaser.Math.Vector2){
-        if(this.playerhealth === 0){return}
-        if(this.currentHealth === CurrentHealth.DAMAGE){return}
 
-        --this._playerhealth
+        if(this.playerhealth === 0 || this.currentHealth === CurrentHealth.DAMAGE||this.isInvincible){return}
+
+            --this._playerhealth
+            this.isInvincible = true;
+            sceneEvents.emit('player-On-Health-Damage', this._playerhealth);
+
+            setTimeout(() => this.isInvincible = false, 500)
+
         console.log(this._playerhealth)
         if(this._playerhealth <= 0){
             //death
             this.currentHealth = CurrentHealth.DEAD
             this.anims.play('player-faint');
             this.setVelocity(0,0);
-
         }else{
             this.setVelocity(dirvec.x,dirvec.y);
             //Damage Color
@@ -165,7 +171,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         setTimeout(() => {
             this.playerState = PlayerState.IDLE;
           }, 350);
-
     }
     }
 
@@ -187,7 +192,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
                 this._gems += gems
                 console.log(this._playerhealth)
                 console.log(this._gems)
-                sceneEvents.emit('player-gems-changed',this._gems)
+                sceneEvents.emit('player-gems-changed',this._gems);
 
             }else if(this.activeSmallLightPillar){
                 
@@ -250,7 +255,8 @@ Phaser.GameObjects.GameObjectFactory.register('player',function(this: Phaser.Gam
     this.displayList.add(sprite);
     this.updateList.add(sprite);
     this.scene.physics.world.enableBody(sprite,Phaser.Physics.Arcade.DYNAMIC_BODY);
-    sprite.body?.setSize(sprite.width * 0.8, sprite.height * 1)   
+    sprite.body?.setSize(sprite.width * 0.8, sprite.height * 0.6);
+    sprite.body?.setOffset(2,7)
     sprite.setPipeline('Light2D');
     return sprite;
 });
