@@ -1,6 +1,5 @@
 import 'phaser';
 import SceneButtons from '../Objects/SceneButtons'
-import { Scene } from 'phaser';
 export default class DeathScene extends Phaser.Scene {
     private wiederbeleben: SceneButtons
     private hauptmenu: SceneButtons
@@ -8,6 +7,7 @@ export default class DeathScene extends Phaser.Scene {
         super('DeathScene')
      }
  create(){
+  this.sound.setVolume(0.5)
     
   const DEATH_Background = this.add.image(110,110,'DEATH_Background')
   const MagieEntflossen_TEXT = this.add.image(110,65,'MagieEntflossen_TEXT')
@@ -18,8 +18,20 @@ export default class DeathScene extends Phaser.Scene {
   this.add.existing(this.hauptmenu);
 
   this.wiederbeleben.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
+    this.sound.play('Button_pressed')
+    this.scene.stop('ebene')
+    this.scene.start('ebene')
 
   })
-    
+  this.hauptmenu.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
+    this.sound.play('Button_pressed')
+
+    this.scene.stop('ebene')
+    this.scene.start('MainMenu')
+  })
 }
+setcounter(counter: number){
+    console.log(counter)
+}
+
 }

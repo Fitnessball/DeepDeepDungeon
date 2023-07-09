@@ -11,6 +11,7 @@ import { Slime2 } from '../Enemies/Slime2';
 import { Slime3 } from '../Enemies/Slime3';
 import { hearthChest } from '../Objects/hearthChest';
 import { Stairs } from '../Objects/Stairs';
+import DeathScene from './DeathScene';
 export class Ebene extends Phaser.Scene {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     animpart: null;
@@ -38,6 +39,8 @@ export class Ebene extends Phaser.Scene {
     isIncreasingRadius: boolean = false;
     ebeneCounter: number;
     characterCamera: any;
+
+    testmusic:any;
     constructor(ebeneCounter:number) {
         super('ebene');
     }
@@ -52,7 +55,7 @@ export class Ebene extends Phaser.Scene {
 
     create() {
         //CHESTS AND LIGHTS
-   
+        
 
         //ICONS
         //SCENE OVERLAY RUN
@@ -60,9 +63,14 @@ export class Ebene extends Phaser.Scene {
         this.scene.run('HearthManager');
         this.scene.run('SmallSphereManager');
         this.scene.run('PriceManager');
-        this.scene.run('DeathScene');
-    
+        this.scene.stop('DeathScene');
         
+        //SOUNDS
+        this.testmusic = this.sound.add('background',{
+            volume:0.2,
+            loop: true
+        })
+        this.testmusic.play()
         //EBENE 1 TILESET
         const Ebene1 = this.make.tilemap({ key: 'Ebene'+this.ebeneCounter });
         const TilesetEbene1 = Ebene1.addTilesetImage('Ebene1', 'tileEbene', 16, 16, 1, 2);
@@ -121,10 +129,10 @@ export class Ebene extends Phaser.Scene {
             const smallLightPillar = smallLightPillarGroup.get(smallLightPillarObj.x!+smallLightPillarObj.width!*0.5,smallLightPillarObj.y!-smallLightPillarObj.height!*0.5,'small_lightPillar') as smallLightPillar;
             smallLightPillarGroup.setDepth(5);
             const smallLightPillarBody = smallLightPillar.body as Phaser.Physics.Arcade.Body;
-              smallLightPillarBody.setSize(16,15)
-               const xOffset = 0;
-               const yOffset = 8;
-               smallLightPillarBody.setOffset(xOffset, yOffset);
+               smallLightPillarBody.setSize(16,15)
+                const xOffset = 0;
+                const yOffset = 8;
+                smallLightPillarBody.setOffset(xOffset, yOffset);
               
               console.log(this.counterPillar+=1)
         });
@@ -202,7 +210,7 @@ export class Ebene extends Phaser.Scene {
             maxSize:1
         });
         //PLAYER
-        this.player = this.add.player(260, 83, 'player_idle_down');
+        this.player = this.add.player(720, 400, 'player_idle_down');
         this.player.setSpell1(this.spell1);
         //Z ACHSE FUER BELEUCHTUNG
         this.lights.enable().setAmbientColor(0x00000);
@@ -212,7 +220,7 @@ export class Ebene extends Phaser.Scene {
         this.lightManager.toggleAllLights(true);
         this.lightManager.setLightVisible(this.spell1light,false);
         
-        const darkOverlay = this.add.rectangle(0, 0, 2000, 2000, 0x000000, 0.8);//make walls darker
+        const darkOverlay = this.add.rectangle(0, 0, 200000, 200000, 0x000000, 0.8);//make walls darker
 
         Ebene1Ground.setPipeline('Light2D');
         Ebene1SideWalls.setPipeline('Light2D');
@@ -223,8 +231,7 @@ export class Ebene extends Phaser.Scene {
         Ebene1Ground.setDepth(3);
         this.player.setDepth(20);
         
-
-
+        
         
         //CAMERA
         this.characterCamera = this.cameras.main.startFollow(this.player, false, 1, 1);
@@ -246,7 +253,7 @@ export class Ebene extends Phaser.Scene {
         this.toggleSceneVisibility('GemManager', 0)
         this.toggleSceneVisibility('SmallSphereManager', 0)
         this.toggleSceneVisibility('PriceManager', 0)
-
+       
 
         
 
@@ -301,15 +308,17 @@ export class Ebene extends Phaser.Scene {
         this.physics.add.collider(this.spell1, smallLightPillarGroup, this.spell1ObjectCollisionHandler, undefined, this);
         this.physics.add.collider(this.spell1, smallSphereGroup, this.spell1ObjectCollisionHandler, undefined, this);
 
-
-
-
-        
+       
         sceneEvents.on('glow-Small-Pillar', () => {
             //small pillar beleuchtung
-            this.glowingLightPillars.push(this.lightManager.addLight(this.lightPillarPositionx, this.lightPillarPositiony, 0x9370DB, 0, 1.2));
-            console.log(this.glowingLightPillars)
+            this.glowingLightPillars.push(this.lightManager.addLight(this.lightPillarPositionx, this.lightPillarPositiony, 0x9340FB, 0, 1.4));
+            //console.log(this.glowingLightPillars)
             });
+        sceneEvents.on('character_hit',()=>{this.sound.play('Character_hit')});
+        sceneEvents.on('Character_spell',()=>{this.sound.play('Character_spell')});
+        sceneEvents.on('Slime_hit',()=>{this.sound.play('Slime_hit')});
+        sceneEvents.on('Chest_open',()=>{this.sound.play('Chest_open')});
+        sceneEvents.on('pillar_activate',()=>{this.sound.play('pillar_activate')});
    }
     //COLLSIONHANDLER
     //PLAYER -> NORMALCHEST
@@ -355,11 +364,13 @@ export class Ebene extends Phaser.Scene {
            const smallSphere = obj2 as smallSphere;
            this.player.setSmallSphere(smallSphere);
            smallSphere.destroy();
-           this.toggleSceneVisibility('SmallSphereManager', 2000);
+           this.toggleSceneVisibility('SmallSphereManager', 3000);
            const sceneHearthManager = this.scene.get('HearthManager');
            const sceneSphereManager = this.scene.get('GemManager');
            sceneSphereManager.sys.setVisible(false);
            sceneHearthManager.sys.setVisible(false);
+            this.sound.play('sphere')
+            
     }
     //PLAYER -> STAIRS
     private playerStairsCollisionHandler(obj1:any,obj2:any){
@@ -370,8 +381,15 @@ export class Ebene extends Phaser.Scene {
         sceneHearthManager.sys.setVisible(false);   
         if(this.counterPillar === this.glowingLightPillars.length){
         this.lightManager.removeAllLights();
+        sceneEvents.destroy()
+        this.sound.play('stairs')
+
         this.scene.stop(this)
         this.scene.start('ebene',[++this.ebeneCounter]);
+
+        this.counterPillar = 0;
+        this.sound.stopAll( )
+        this.testmusic.stop()
         }
     }
     
@@ -395,9 +413,11 @@ export class Ebene extends Phaser.Scene {
             sceneEvents.destroy()
             this.counterPillar = 0;
             setTimeout(()=>{
-                this.scene.stop();
-                this.scene.start('ebene',[this.ebeneCounter]);
-            },5000);
+                //this.scene.stop();
+                //this.scene.start('ebene',[this.ebeneCounter]);
+                this.scene.run('DeathScene');
+
+            },4500);
         }
     }
     //SPELL1 -> SLIME
@@ -406,6 +426,7 @@ export class Ebene extends Phaser.Scene {
         this.spell1Collide = true
         spell1.destroy()
         slime.handleSlimeHit();
+        sceneEvents.emit('Slime_hit')
         if (slime.slimehealth <= 0) {
             slime.body.destroy()
 
@@ -441,10 +462,10 @@ export class Ebene extends Phaser.Scene {
         this.lightManager.update();
         if(this.glowingLightPillars !== undefined){
             this.glowingLightPillars.forEach((pillar)=>{
-               this.lightManager.increaseLightRadius(pillar, 75,0.4)
+               this.lightManager.increaseLightRadius(pillar, 85,0.4)
             })}
         if (this.player.playerhealth === 3) {
-        this.lightManager.increaseLightRadius(this.playerlight, 75,0.8);
+        this.lightManager.increaseLightRadius(this.playerlight, 65,0.8);
         }
         //LIGHT FOLLOW PLAYER
         this.lightManager.updateLightPosition(this.playerlight,this.player.x,this.player.y)

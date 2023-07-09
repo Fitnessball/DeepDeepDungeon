@@ -72,6 +72,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         if(this.playerhealth === 0 || this.currentHealth === CurrentHealth.DAMAGE||this.isInvincible){return}
 
             --this._playerhealth
+            sceneEvents.emit('character_hit')
             this.isInvincible = true;
             sceneEvents.emit('player-On-Health-Damage', this._playerhealth);
 
@@ -125,7 +126,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         //console.dir(playerdirection)
         const vec = new Phaser.Math.Vector2(0,0);
         this.playerState = PlayerState.CAST_SPELL;
-        
         switch(playerdirection){
             case'up':
             vec.y = -1
@@ -171,6 +171,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         setTimeout(() => {
             this.playerState = PlayerState.IDLE;
           }, 350);
+        sceneEvents.emit('Character_spell')
+        
     }
     }
 

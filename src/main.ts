@@ -16,7 +16,7 @@ const config: Phaser.Types.Core.GameConfig = {
     backgroundColor: "#212121",
     //powerPreference: "high-performance",
     scene:[
-        PreLoadScene,DeathScene, MainMenu, Ebene, HearthManager, GemManager, SmallSphereManager, PriceManager
+        PreLoadScene, MainMenu, Ebene, HearthManager, GemManager, SmallSphereManager, PriceManager, DeathScene,
     ],
     scale: {
         // Größe des Screenformates
@@ -34,7 +34,7 @@ const config: Phaser.Types.Core.GameConfig = {
             default: 'arcade',
             arcade: {
                 gravity: { y: 0},
-                debug: true,
+                debug: false,
                 fixedStep: true,
                 useTree: true,
                 maxEntries:5000

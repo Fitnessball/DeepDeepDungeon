@@ -13,10 +13,12 @@ export class smallLightPillar extends Phaser.Physics.Arcade.Sprite{
         this.play('small-lightPillar-Glow',true);
         
         setTimeout(() => {
-            this.play('small-lightPillar-Stays',true);
-              }, 1300);
+                this.play('small-lightPillar-Stays',true);
+            
+              }, 700);
          
         sceneEvents.emit('glow-Small-Pillar');
+        sceneEvents.emit('pillar_activate');
         return 1
     }
 }

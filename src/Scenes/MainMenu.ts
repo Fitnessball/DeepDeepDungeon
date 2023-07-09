@@ -44,7 +44,7 @@ export default class MainMenu extends Phaser.Scene {
   this.kugel = this.add.image(60,97,'small_Sphere').setVisible(false);
   this.lightpillar = this.add.image(160,90,'small_lightPillar').setVisible(false);
   
-
+  this.sound.setVolume(0.5);
   this.add.existing(this.start);
   this.add.existing(this.anleitung);
   this.add.existing(this.arrowUp).setVisible(false);
@@ -55,6 +55,7 @@ export default class MainMenu extends Phaser.Scene {
   this.add.existing(this.weiterP1).setVisible(false);
   this.add.existing(this.zurückP1).setVisible(false);
   this.start.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
+      this.sound.play('Button_pressed')
         this.scene.start('ebene',[1]);
   })
   this.anleitung.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
@@ -62,6 +63,7 @@ export default class MainMenu extends Phaser.Scene {
       this.anleitungS1Visible(true)
       this.weiterP1.setVisible(true);
       this.zurückP1.setVisible(true);
+      this.sound.play('Button_pressed')
 })
 this.zurückP1.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
       if(this.pageCounter===1){
@@ -76,8 +78,11 @@ this.zurückP1.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,(
              this.weiterP1.setVisible(true);
 
       }
+      this.sound.play('Button_pressed')
+
 })
 this.weiterP1.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
+      this.sound.play('Button_pressed')
       
       if(this.pageCounter===1){
       this.pageCounter++
