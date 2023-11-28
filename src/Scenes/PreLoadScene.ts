@@ -171,18 +171,18 @@ export class PreLoadScene extends Phaser.Scene {
             frameHeight: 16
         })
         //HERZEN
-        this.load.image('herzLeer', 'assets/sprites/icons/HerzLeer.png');
-        this.load.image('herzVoll', 'assets/sprites/icons/HerzVoll.png');
-        this.load.spritesheet('hearth_faint','assets/sprites/icons/HerzVerschwindet-Sheet.png',{
+        this.load.image('herzLeer', 'assets/sprites/Icons/HerzLeer.png');
+        this.load.image('herzVoll', 'assets/sprites/Icons/HerzVoll.png');
+        this.load.spritesheet('hearth_faint','assets/sprites/Icons/HerzVerschwindet-Sheet.png',{
             frameWidth: 16,
             frameHeight: 16
         });
         //STAIRS
         this.load.image('Stairs','assets/sprites/Objects/stairs/Stairs.png');
         //SPHERES
-        this.load.image('small_Sphere','assets/sprites/icons/small_LightPillar_Sphere.png');
+        this.load.image('small_Sphere','assets/sprites/Icons/small_LightPillar_Sphere.png');
         //GEMS
-        this.load.image('normal_Gem','assets/sprites/icons/normal_Gem.png')
+        this.load.image('normal_Gem','assets/sprites/Icons/normal_Gem.png')
         //SPELLS
         this.load.image('spell1','assets/sprites/Spells/Spell2.png');
         //CHESTS
