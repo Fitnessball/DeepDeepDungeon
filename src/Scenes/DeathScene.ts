@@ -30,8 +30,5 @@ export default class DeathScene extends Phaser.Scene {
     this.scene.start('MainMenu')
   })
 }
-setcounter(counter: number){
-    console.log(counter)
-}
 
 }

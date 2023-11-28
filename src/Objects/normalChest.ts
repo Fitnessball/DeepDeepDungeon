@@ -12,6 +12,6 @@ export class normalChest extends Phaser.Physics.Arcade.Sprite{
         if(this.anims.currentAnim?.key === 'normal-Chest-Open'){return 0}
         this.play('normal-Chest-Open');
         sceneEvents.emit('Chest_open')
-        return Phaser.Math.Between(5,25);
+        return Phaser.Math.Between(10,30);
     }
 }

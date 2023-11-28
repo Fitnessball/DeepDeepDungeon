@@ -19,6 +19,7 @@ export default class MainMenu extends Phaser.Scene {
       private kugel: Phaser.GameObjects.Image
       private pageCounter: number = 1;
       private lightpillar: Phaser.GameObjects.Image
+      private titleDeepDeepDungeon: Phaser.GameObjects.Image
  constructor(){
     super('MainMenu')
  }
@@ -27,6 +28,7 @@ export default class MainMenu extends Phaser.Scene {
   const Xoffset = -60
   const Yoffset = 0
   const background = this.add.image(110,110,'Background_MAINMENU');
+  this.titleDeepDeepDungeon = this.add.image(110,70,'TitleDeepDeepDungeon');
   this.start = new SceneButtons(this,110,130,'BigButton_UP_START','BigButton_DOWN_START');
   this.anleitung = new SceneButtons(this,110,170,'BigButton_UP_ANLEITUNG','BigButton_DOWN_ANLEITUNG');
   this.Laufen_TEXT = this.add.image(111+Xoffset,135,'Laufen_TEXT').setVisible(false);
@@ -83,7 +85,7 @@ this.zurückP1.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,(
 })
 this.weiterP1.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
       this.sound.play('Button_pressed')
-      
+
       if(this.pageCounter===1){
       this.pageCounter++
       this.anleitungS1Visible(false);
@@ -91,7 +93,6 @@ this.weiterP1.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()
       this.weiterP1.setVisible(false);
       }
 })
-
  }
  anleitungS2Visible(visible:boolean){
       this.seite_2_TEXT.setVisible(visible);
@@ -112,6 +113,6 @@ this.weiterP1.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()
  startSceneVisible(visible:boolean){
       this.start.setVisible(visible);
       this.anleitung.setVisible(visible);
+      this.titleDeepDeepDungeon.setVisible(visible);
  }
-
 }

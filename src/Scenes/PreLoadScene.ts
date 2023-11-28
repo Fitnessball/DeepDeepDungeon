@@ -14,6 +14,8 @@ export class PreLoadScene extends Phaser.Scene {
         this.load.tilemapTiledJSON('Ebene1', '../assets/TileSets/Ebene-01.json');
         this.load.tilemapTiledJSON('Ebene2', '../assets/TileSets/Ebene-02.json');
         this.load.tilemapTiledJSON('Ebene3', '../assets/TileSets/Ebene-03.json');
+        this.load.tilemapTiledJSON('Ebene4', '../assets/TileSets/Ebene-04.json');
+        this.load.tilemapTiledJSON('Ebene5', '../assets/TileSets/Ebene-05.json');
 
         //MAINMENU
         //Hintergrund
@@ -41,14 +43,19 @@ export class PreLoadScene extends Phaser.Scene {
         //SpaceBar
         this.load.image('Spacebar_DOWN','../assets/images/Buttons/Steuerung/Spacebar_DOWN.png')
         this.load.image('Spacebar_UP','../assets/images/Buttons/Steuerung/Spacebar_UP.png')
+        //AttackButton
+        this.load.image('Attack_DOWN','../assets/images/Buttons/Steuerung/Attack_Button_DOWN.png')
+        this.load.image('Attack_UP','../assets/images/Buttons/Steuerung/Attack_Button_UP.png')
         //Text
         this.load.image('Laufen_TEXT','../assets/images/Buttons/Text/Laufen.png')
         this.load.image('IntundAng_TEXT','../assets/images/Buttons/Text/Interagieren und Angreifen.png')
         this.load.image('Seite_2_TEXT','../assets/images/Buttons/Text/Seite_2_TEXT.png')
         this.load.image('Ziel_TEXT','../assets/images/Buttons/Text/Ziel_TEXT.png')
         this.load.image('Steuerung_TEXT','../assets/images/Buttons/Text/Steuerung_TEXT.png')
-        
-
+        this.load.image('TitleDeepDeepDungeon','../assets/images/Buttons/Text/TitleDeepDeepDungeon.png')
+        //WinningScreen
+        this.load.image('Winning_TEXT','../assets/images/Buttons/Text/Winning_TEXT.png')
+        this.load.image('WINNING_Background','../assets/images/Buttons/WINNING_Background.png')
         //DeathScreen
         this.load.image('MagieEntflossen_TEXT','../assets/images/Buttons/Text/MagieEntflossen_TEXT.png')
 
@@ -68,6 +75,7 @@ export class PreLoadScene extends Phaser.Scene {
         this.load.audio('sphere','../assets/sounds/Objects/Pillar/sphere.wav');
         this.load.audio('stairs','../assets/sounds/Objects/Stairs/stairs.wav');
         this.load.audio('background','../assets/sounds/Dungeon-Crawler.ogg');
+
 
         //CHARACTER
         //idles

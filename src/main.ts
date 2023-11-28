@@ -7,6 +7,9 @@ import { PriceManager } from './Managers/PriceManager';
 import { Ebene } from './Scenes/Ebene';
 import MainMenu from './Scenes/MainMenu';
 import DeathScene from './Scenes/DeathScene';
+import WinningScene from './Scenes/WinningScene';
+import TouchScene from './Scenes/TouchScene';
+import { StairsManager } from './Managers/StairsManager';
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.WEBGL,
@@ -16,7 +19,7 @@ const config: Phaser.Types.Core.GameConfig = {
     backgroundColor: "#212121",
     //powerPreference: "high-performance",
     scene:[
-        PreLoadScene, MainMenu, Ebene, HearthManager, GemManager, SmallSphereManager, PriceManager, DeathScene,
+        PreLoadScene, MainMenu, Ebene, HearthManager, GemManager, SmallSphereManager, PriceManager,StairsManager, DeathScene, WinningScene, TouchScene
     ],
     scale: {
         // Größe des Screenformates
