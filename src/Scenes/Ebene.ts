@@ -62,13 +62,13 @@ export class Ebene extends Phaser.Scene {
 
         //ICONS
         //SCENE OVERLAY RUN
-        this.scene.run('GemManager');
-        this.scene.run('HearthManager');
-        this.scene.run('SmallSphereManager');
-        this.scene.run('PriceManager');
+        //this.scene.run('TouchScene');
+        //this.scene.run('GemManager');
+        //this.scene.run('HearthManager');
+        //this.scene.run('SmallSphereManager');
+        //this.scene.run('PriceManager');
         this.scene.stop('DeathScene');
         this.scene.stop('WinningScene');
-        this.scene.run('TouchScene');
 
         //SOUNDS
         this.testmusic = this.sound.add('background',{
