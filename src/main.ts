@@ -12,7 +12,7 @@ import TouchScene from './Scenes/TouchScene';
 import { StairsManager } from './Managers/StairsManager';
 
 const config: Phaser.Types.Core.GameConfig = {
-    type: Phaser.WEBGL,
+    type: Phaser.CANVAS,
     title: 'DeepDeepDungeon',
     width: 220,
     height: 220,
