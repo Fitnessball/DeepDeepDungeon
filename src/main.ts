@@ -12,7 +12,7 @@ import TouchScene from './Scenes/TouchScene';
 import { StairsManager } from './Managers/StairsManager';
 
 const config: Phaser.Types.Core.GameConfig = {
-    type: Phaser.CANVAS,
+    type: Phaser.WEBGL,
     title: 'DeepDeepDungeon',
     width: 220,
     height: 220,
@@ -22,9 +22,6 @@ const config: Phaser.Types.Core.GameConfig = {
     scene:[
         PreLoadScene, MainMenu, Ebene, HearthManager, GemManager, SmallSphereManager, PriceManager,StairsManager, DeathScene, WinningScene, TouchScene
     ],
-    audio: { 
-        disableWebAudio: true 
-    },
     scale: {
         // Größe des Screenformates
         zoom:3,
