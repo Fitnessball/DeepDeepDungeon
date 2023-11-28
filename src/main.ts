@@ -17,10 +17,14 @@ const config: Phaser.Types.Core.GameConfig = {
     width: 220,
     height: 220,
     backgroundColor: "#212121",
+    
     //powerPreference: "high-performance",
     scene:[
         PreLoadScene, MainMenu, Ebene, HearthManager, GemManager, SmallSphereManager, PriceManager,StairsManager, DeathScene, WinningScene, TouchScene
     ],
+    audio: { 
+        disableWebAudio: true 
+    },
     scale: {
         // Größe des Screenformates
         zoom:3,
