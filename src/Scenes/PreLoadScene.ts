@@ -180,7 +180,7 @@ export class PreLoadScene extends Phaser.Scene {
         //STAIRS
         this.load.image('Stairs','assets/sprites/Objects/stairs/Stairs.png');
         //SPHERES
-        this.load.image('small_Sphere','assets/sprites/Icons/small_LightPillar_Sphere.png');
+        this.load.image('small_Sphere','assets/sprites/Icons/Small_LightPillar_Sphere.png');
         //GEMS
         this.load.image('normal_Gem','assets/sprites/Icons/normal_Gem.png')
         //SPELLS
