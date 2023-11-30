@@ -58,11 +58,12 @@ export class Ebene extends Phaser.Scene {
     }
 
     create() {
-        
-
         //ICONS
         //SCENE OVERLAY RUN
+        if(this.game.config.height == 440){
         this.scene.run('TouchScene');
+        }
+
         this.scene.run('GemManager');
         this.scene.run('HearthManager');
         this.scene.run('SmallSphereManager');
@@ -143,7 +144,6 @@ export class Ebene extends Phaser.Scene {
         });
 
         //ENEMY1 SLIME        
-        
         this.slimes = this.physics.add.group({
             classType: Slime1,
             createCallback: (gameObj) => {
@@ -239,7 +239,7 @@ export class Ebene extends Phaser.Scene {
         
         
         //CAMERA
-        this.characterCamera = this.cameras.main.startFollow(this.player, false, 1, 1);
+        this.characterCamera = this.cameras.main.startFollow(this.player, false, 1, 1,0, this.game.config.height == 440 ? -110 : 0 );
         this.characterCamera.setZoom(1)
 
         this.toggleSceneVisibility('HearthManager', 0)

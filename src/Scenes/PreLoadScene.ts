@@ -43,9 +43,6 @@ export class PreLoadScene extends Phaser.Scene {
         //SpaceBar
         this.load.image('Spacebar_DOWN','assets/images/Buttons/Steuerung/Spacebar_DOWN.png')
         this.load.image('Spacebar_UP','assets/images/Buttons/Steuerung/Spacebar_UP.png')
-        //AttackButton
-        this.load.image('Attack_DOWN','assets/images/Buttons/Steuerung/Attack_Button_DOWN.png')
-        this.load.image('Attack_UP','assets/images/Buttons/Steuerung/Attack_Button_UP.png')
         //Text
         this.load.image('Laufen_TEXT','assets/images/Buttons/Text/Laufen.png')
         this.load.image('IntundAng_TEXT','assets/images/Buttons/Text/Interagieren und Angreifen.png')
@@ -58,13 +55,23 @@ export class PreLoadScene extends Phaser.Scene {
         this.load.image('WINNING_Background','assets/images/Buttons/WINNING_Background.png')
         //DeathScreen
         this.load.image('MagieEntflossen_TEXT','assets/images/Buttons/Text/MagieEntflossen_TEXT.png')
-
         this.load.image('Hauptmenu_DOWN','assets/images/Buttons/Hauptmenü_DOWN.png')
         this.load.image('Hauptmenu_UP','assets/images/Buttons/Hauptmenü_UP.png')
         this.load.image('Wiederbeleben_DOWN','assets/images/Buttons/Wiederbeleben_DOWN.png')
         this.load.image('Wiederbeleben_UP','assets/images/Buttons/Wiederbeleben_UP.png')
         this.load.image('DEATH_Background','assets/images/Buttons/DEATH_Background.png')
-
+        //GBC
+        this.load.image('GBC_Blue','assets/images/Buttons/GameBoy/GBC_Grey.png');
+        this.load.image('GBC_Cross_Right_UP','assets/images/Buttons/GameBoy/GBC_Cross_Right_UP.png');
+        this.load.image('GBC_Cross_Right_DOWN','assets/images/Buttons/GameBoy/GBC_Cross_Right_DOWN.png');
+        this.load.image('GBC_Cross_Left_UP','assets/images/Buttons/GameBoy/GBC_Cross_Left_UP.png');
+        this.load.image('GBC_Cross_Left_DOWN','assets/images/Buttons/GameBoy/GBC_Cross_Left_DOWN.png');
+        this.load.image('GBC_Cross_Up_UP','assets/images/Buttons/GameBoy/GBC_Cross_Up_UP.png');
+        this.load.image('GBC_Cross_Up_DOWN','assets/images/Buttons/GameBoy/GBC_Cross_Up_DOWN.png');
+        this.load.image('GBC_Cross_Down_UP','assets/images/Buttons/GameBoy/GBC_Cross_Down_UP.png');
+        this.load.image('GBC_Cross_Down_DOWN','assets/images/Buttons/GameBoy/GBC_Cross_Down_DOWN.png');
+        this.load.image('GBC_Attack_UP','assets/images/Buttons/GameBoy/GBC_Attack_UP.png');
+        this.load.image('GBC_Attack_DOWN','assets/images/Buttons/GameBoy/GBC_Attack_DOWN.png');
         //SOUND
         this.load.audio('Character_hit','assets/sounds/Character/PlayerHitHurt.wav');
         this.load.audio('Character_spell','assets/sounds/Character/SpellShoot.wav');

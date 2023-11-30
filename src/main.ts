@@ -15,7 +15,7 @@ const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.WEBGL,
     title: 'DeepDeepDungeon',
     width: 220,
-    height: 220,
+    height: window.innerHeight > window.innerWidth ? 440 : 220,
     backgroundColor: "#212121",
     
     //powerPreference: "high-performance",
@@ -24,7 +24,7 @@ const config: Phaser.Types.Core.GameConfig = {
     ],
     scale: {
         // Größe des Screenformates
-        zoom:3,
+        zoom:2,
         parent: 'mygame',
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
@@ -42,7 +42,6 @@ const config: Phaser.Types.Core.GameConfig = {
                 fixedStep: true,
                 useTree: true,
                 maxEntries:5000
-                
             }
             
     },fps: {

@@ -11,21 +11,16 @@ export class GemManager extends Phaser.Scene{
             fontSize: '10px'
         });
         const gemsImage = this.add.image(0,0,'normal_Gem');
-        function updateTextAndImagePosition() {
-            const textWidth = gemsLabel.width;
-            const totalWidth = textWidth + 2 + gemsImage.width;
         
-            gemsLabel.setPosition(-totalWidth / 2+5 + textWidth / 2, 0);
-            gemsImage.setPosition(totalWidth / 2 - gemsImage.width/2, 0);
-        }
         gemsLabel.setOrigin(0.5);
         gemsImage.setScale(0.8,0.8);
         container.add(gemsImage);
         container.add(gemsLabel);
-        updateTextAndImagePosition();
+        this.updateTextAndImagePosition(gemsLabel,gemsImage);
         sceneEvents.on('player-gems-changed',(gems: number)=> {
             gemsLabel.text = gems.toString()
-            updateTextAndImagePosition();
+            this.updateTextAndImagePosition(gemsLabel,gemsImage);
+            
         });
         
         container.setPosition(this.game.canvas.width / 2, this.game.canvas.height / 2-16);
@@ -33,5 +28,17 @@ export class GemManager extends Phaser.Scene{
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
             sceneEvents.off('player-gems-changed');
            })
+    }
+    updateTextAndImagePosition(gemsLabel:Phaser.GameObjects.Text,gemsImage:Phaser.GameObjects.Image) {
+        const textWidth = gemsLabel.width;
+        const totalWidth = textWidth + 2 + gemsImage.width;
+        if(this.game.config.height == 440){
+        
+        gemsLabel.setPosition(-totalWidth / 2+5 + textWidth / 2, -110);
+        gemsImage.setPosition(totalWidth / 2 - gemsImage.width/2, -110);
+        }else{
+        gemsLabel.setPosition(-totalWidth / 2+5 + textWidth / 2, 0);
+        gemsImage.setPosition(totalWidth / 2 - gemsImage.width/2, 0);
+        }
     }
 }

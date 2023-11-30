@@ -12,13 +12,15 @@ export default class TouchScene extends Phaser.Scene {
         super('TouchScene')
      }
  create(){
-    const Xoffset = -60
-    const Yoffset = 0
-    this.buttonAttack = new SceneButtons(this,269+Xoffset,207+Yoffset,'Attack_UP','Attack_DOWN')
-    this.arrowDown = new SceneButtons(this,92+Xoffset,207+Yoffset,'ArrowKey_Down_UP','ArrowKey_Down_DOWN');
-    this.arrowUp = new SceneButtons(this,92+Xoffset,182+Yoffset,'ArrowKey_Up_UP','ArrowKey_Up_DOWN');
-    this.arrowLeft = new SceneButtons(this,71+Xoffset,207+Yoffset,'ArrowKey_Left_UP','ArrowKey_Left_DOWN');
-    this.arrowRight = new SceneButtons(this,113+Xoffset,207+Yoffset,'ArrowKey_Right_UP','ArrowKey_Right_DOWN');
+    const Xoffset = -45
+    const Yoffset = 110
+    const GBC_Blue = this.add.image(110,220,'GBC_Blue');
+
+    this.buttonAttack = new SceneButtons(this,219+Xoffset,177+Yoffset,'GBC_Attack_UP','GBC_Attack_DOWN')
+    this.arrowDown = new SceneButtons(this,103+Xoffset,222+Yoffset,'GBC_Cross_Down_UP','GBC_Cross_Down_DOWN');
+    this.arrowUp = new SceneButtons(this,103+Xoffset,168+Yoffset,'GBC_Cross_Up_UP','GBC_Cross_Up_DOWN');
+    this.arrowLeft = new SceneButtons(this,73+Xoffset,195+Yoffset,'GBC_Cross_Left_UP','GBC_Cross_Left_DOWN');
+    this.arrowRight = new SceneButtons(this,133+Xoffset,195+Yoffset,'GBC_Cross_Right_UP','GBC_Cross_Right_DOWN');
     this.add.existing(this.arrowDown);
     this.add.existing(this.arrowUp);
     this.add.existing(this.arrowLeft);
