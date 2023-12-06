@@ -22,7 +22,7 @@ const randomDirection = (sameDirection: Directions) => {
 export class Slime3 extends Phaser.Physics.Arcade.Sprite{
     private direction = Directions.RIGHT;  
     private changeWalkEvent: Phaser.Time.TimerEvent
-    private _slimehealth = 5;
+    private _slimehealth = 3;
     private currentHealth = CurrentHealth.IDLE
     private healthTimedt = 0;
     get slimehealth(){return this._slimehealth}

@@ -14,5 +14,6 @@ export class hearthChest extends Phaser.Physics.Arcade.Sprite{
         sceneEvents.emit('Chest_open')
 
         return [1,-100];
+         
     }
 }

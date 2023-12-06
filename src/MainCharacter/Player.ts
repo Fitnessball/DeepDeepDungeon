@@ -213,10 +213,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 const [hearth, gems] = this.activeHearthChest.hearthChestOpen(this._playerhealth, this._gems);
                 this._playerhealth += hearth
                 this._gems += gems
-                console.log(this._playerhealth)
-                console.log(this._gems)
+                //console.log(this._playerhealth)
+                //console.log(this._gems)
                 sceneEvents.emit('player-gems-changed', this._gems);
-
             } else if (this.activeSmallLightPillar) {
 
                 if (this._spheres !== 0) {
@@ -227,7 +226,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.castSpell1()
             }
-            
             return
         }
         if (this.playerState === PlayerState.IDLE) {

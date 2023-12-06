@@ -43,13 +43,16 @@ export class Ebene extends Phaser.Scene {
     isIncreasingRadius: boolean = false;
     ebeneCounter: number;
     characterCamera: any;
+    gemsCoutner: number;
 
     testmusic:any;
-    constructor(ebeneCounter:number) {
+    constructor(ebeneCounter:number,gemsCounter:number) {
         super('ebene');
     }
     init(args: any){
         this.ebeneCounter = args[0];
+        this.gemsCoutner = args[1];
+        console.log(args)
     }
     preload() {
         this.cursors = this.input.keyboard!.createCursorKeys();
@@ -106,7 +109,7 @@ export class Ebene extends Phaser.Scene {
        const stairsLayer = Ebene1.getObjectLayer('Stairs');
        stairsLayer?.objects.forEach(stairsObj =>{
            const stairs = StairsGroup.get(stairsObj.x!+stairsObj.width!*0.5,stairsObj.y!-stairsObj.height!*0.5,'Stairs') as Stairs
-           StairsGroup.setDepth(12);
+           StairsGroup.setDepth(7);
        });
         //NORMAL CHEST
         const normalChestGroup = this.physics.add.staticGroup({
@@ -297,6 +300,7 @@ export class Ebene extends Phaser.Scene {
         this.physics.add.collider(this.spell1, hearthChestGroup, this.spell1ObjectCollisionHandler, undefined, this);
         this.physics.add.collider(this.spell1, smallLightPillarGroup, this.spell1ObjectCollisionHandler, undefined, this);
         this.physics.add.collider(this.spell1, smallSphereGroup, this.spell1ObjectCollisionHandler, undefined, this);
+        this.physics.add.collider(this.spell1, StairsGroup, this.spell1ObjectCollisionHandler, undefined, this);
 
        
         sceneEvents.on('glow-Small-Pillar', () => {

@@ -58,7 +58,7 @@ export default class MainMenu extends Phaser.Scene {
   this.add.existing(this.zurückP1).setVisible(false);
   this.start.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
       this.sound.play('Button_pressed')
-        this.scene.start('ebene',[1]);
+        this.scene.start('ebene',[1,0]);
   })
   this.anleitung.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,()=>{
       this.startSceneVisible(false)
