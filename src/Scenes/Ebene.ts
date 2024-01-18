@@ -223,7 +223,7 @@ export class Ebene extends Phaser.Scene {
         //Z ACHSE FUER BELEUCHTUNG
         this.lights.enable().setAmbientColor(0x000000);
         this.lightManager = new LightManager(this);
-        this.playerlight = this.lightManager.addLight(this.player.x, this.player.y, 0xFFFFFF,0,0.7);
+        this.playerlight = this.lightManager.addLight(this.player.x, this.player.y, 0xFFFFFF,0,0.9);
         this.spell1light = this.lightManager.addLight(this.player.x, this.player.y, 0xFFA500,0,0.8);
         this.lightManager.toggleAllLights(true);
         this.lightManager.setLightVisible(this.spell1light,false);
@@ -377,7 +377,7 @@ export class Ebene extends Phaser.Scene {
         this.lightManager.removeAllLights();
         sceneEvents.destroy();
         this.sound.play('stairs');
-        if(this.ebeneCounter === 5){
+        if(this.ebeneCounter === 2){
             this.scene.run('WinningScene');
         }else{
             this.scene.stop(this);
@@ -465,10 +465,10 @@ export class Ebene extends Phaser.Scene {
         this.lightManager.update();
         if(this.glowingLightPillars !== undefined){
             this.glowingLightPillars.forEach((pillar)=>{
-               this.lightManager.increaseLightRadius(pillar, 85,0.4)
+               this.lightManager.increaseLightRadius(pillar, 130,0.7)
             })}
         if (this.player.playerhealth === 3) {
-        this.lightManager.increaseLightRadius(this.playerlight, 65,0.8);
+        this.lightManager.increaseLightRadius(this.playerlight, 95,0.8);
         }
         //LIGHT FOLLOW PLAYER
         this.lightManager.updateLightPosition(this.playerlight,this.player.x,this.player.y)

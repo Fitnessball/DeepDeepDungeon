@@ -13,9 +13,9 @@ export class PreLoadScene extends Phaser.Scene {
         this.load.image('tileEbene', 'assets/images/Tilesets/TileSetEbene1ex.png');
         this.load.tilemapTiledJSON('Ebene1', 'assets/TileSets/Ebene-01.json');
         this.load.tilemapTiledJSON('Ebene2', 'assets/TileSets/Ebene-02.json');
-        this.load.tilemapTiledJSON('Ebene3', 'assets/TileSets/Ebene-03.json');
-        this.load.tilemapTiledJSON('Ebene4', 'assets/TileSets/Ebene-04.json');
-        this.load.tilemapTiledJSON('Ebene5', 'assets/TileSets/Ebene-05.json');
+        //this.load.tilemapTiledJSON('Ebene3', 'assets/TileSets/Ebene-03.json');
+        //this.load.tilemapTiledJSON('Ebene4', 'assets/TileSets/Ebene-04.json');
+        //this.load.tilemapTiledJSON('Ebene5', 'assets/TileSets/Ebene-05.json');
 
         //MAINMENU
         //Hintergrund
