@@ -379,6 +379,7 @@ export class Ebene extends Phaser.Scene {
         this.sound.play('stairs');
         if(this.ebeneCounter === 2){
             this.scene.run('WinningScene');
+            this.scene.stop('TouchScene');
         }else{
             this.scene.stop(this);
             this.scene.start('ebene',[++this.ebeneCounter]);
@@ -411,13 +412,14 @@ export class Ebene extends Phaser.Scene {
             this.playerSmallSphereCollider?.destroy();
             this.playerWallsCollider?.destroy();
             this.playerStairsCollider?.destroy();
-            this.scene.stop('TouchScene');
+            
 
             sceneEvents.destroy()
             this.counterPillar = 0;
             setTimeout(()=>{
                 //this.scene.stop();
                 //this.scene.start('ebene',[this.ebeneCounter]);
+                this.scene.stop('TouchScene');
                 this.scene.run('DeathScene');
                 this.sound.stopAll();
                 this.testmusic.stop();
